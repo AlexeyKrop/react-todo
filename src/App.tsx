@@ -129,8 +129,7 @@ function App() {
           <AddItemForm addTask={addToDoList}/>
         </Grid>
         <Grid container direction="row"
-              justifyContent="space-between"
-              alignItems="center">
+              alignItems="flex-start">
           {todoList.map(t => {
             let tasksForTodolist = tasks[t.id];
             if (t.filter === "active") {
@@ -140,8 +139,8 @@ function App() {
               tasksForTodolist = tasks[t.id].filter(t => t.isDone);
             }
             return (
-              <Grid style={{padding: '20px'}} key={t.id}>
-                <Paper style={{padding: '20px'}}>
+              <Grid style={{padding: '20px 0'}} key={t.id}>
+                <Paper style={{padding: '20px', marginRight: '10px'}}>
                   <Todolist todoListId={t.id}
                             key={t.id}
                             title={t.title}
