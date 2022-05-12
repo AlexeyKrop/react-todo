@@ -1,4 +1,8 @@
 import React, {ChangeEvent, useState} from "react";
+import {Input} from "@mui/material";
+
+
+
 
 type EditableSpanType = {
   callBack: (value: string) => void
@@ -17,7 +21,7 @@ export function EditableSpan(props: EditableSpanType) {
   }
   return (
     <>
-      {!editMode ? <span onDoubleClick={onClickDoubleHandler}>{props.title}</span> : <input onChange={changeTaskValue} value={inputValue} onBlur={onClickDoubleHandler} autoFocus type="text"/>}
+      {!editMode ? <span style={{marginRight: '10px'}} onDoubleClick={onClickDoubleHandler}>{props.title}</span> : <Input onChange={changeTaskValue} value={inputValue} onBlur={onClickDoubleHandler} autoFocus type="text"/>}
     </>
   )
 }

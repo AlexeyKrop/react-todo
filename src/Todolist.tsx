@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import {FilterValuesType} from './App';
-import {AddItemForm} from "./AddItemForm";
-import {EditableSpan} from "./EditableSpan";
+import {AddItemForm} from "./Components/AddItemForm";
+import {EditableSpan} from "./Components/EditableSpan";
 import {Button, Checkbox} from "@mui/material";
 import IconButton from '@mui/material/IconButton';
 import {Delete} from "@mui/icons-material";
@@ -46,9 +46,12 @@ export function Todolist(props: PropsType) {
   return <div>
     <h3>
       <EditableSpan callBack={onChangeInputValue} title={props.title}/>
-      <IconButton onClick={() => onClickRemoveTodoListHandler(props.todoListId)} aria-label="delete" size="large">
-        <Delete/>
-      </IconButton>
+      <Button onClick={() => onClickRemoveTodoListHandler(props.todoListId)} variant="outlined" startIcon={<Delete />}>
+        Delete
+      </Button>
+      {/*<IconButton onClick={() => onClickRemoveTodoListHandler(props.todoListId)} aria-label="delete" size="large">*/}
+      {/*  <Delete/>*/}
+      {/*</IconButton>*/}
     </h3>
     <AddItemForm addTask={addTask}/>
     <ul style={{listStyleType: 'none', padding: 0}}>
