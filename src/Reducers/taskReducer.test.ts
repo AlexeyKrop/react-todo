@@ -50,6 +50,6 @@ test('check change status in task', () => {
   //   taskId: 0,
   //   isDone: false,
   // }
-  const endState = taskReducer(startState, ChangeStatusAC(todoListID_1, 0, false))
+  const endState = taskReducer(startState, ChangeStatusAC(todoListID_1, startState[todoListID_1][0].id, false))
   endState && expect(endState[todoListID_1][0].isDone).toBe(false)
 })
