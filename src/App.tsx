@@ -9,7 +9,7 @@ export type FilterValuesType = "all" | "active" | "completed";
 export type TodoListType = {
   id: string,
   title: string,
-  filter: string
+  filter: FilterValuesType
 }
 export type TasksType = {
   [id: string]: Array<{
@@ -56,7 +56,7 @@ function App() {
   })
   const addToDoList = (title: string) => {
     let toDiListID = v1();
-    let newToDoList = {
+    let newToDoList: TodoListType = {
       id: toDiListID,
       title: title,
       filter: "all",
