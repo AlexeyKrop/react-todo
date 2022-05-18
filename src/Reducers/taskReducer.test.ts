@@ -13,18 +13,27 @@ const startState = {
   ],
   [todoListID_2]: [
     {id: v1(), title: "milk", isDone: true},
-    {id: v1(), title: "solt", isDone: true},
+    {id: v1(), title: "salt", isDone: true},
     {id: v1(), title: "beer", isDone: false},
     {id: v1(), title: "juice", isDone: false},
     {id: v1(), title: "cola", isDone: false},
   ],
 }
-export type TaskReducerType = {
-  type: string,
+export type RemoveTaskAT = {
+  type: 'REMOVE-TASK',
   todoListId: string,
-  title?: string
-  taskId?: number | string
-  isDone?: boolean
+  taskId: string | number
+}
+export type AddTaskAT = {
+  type: 'ADD-TASK',
+  todoListId: string,
+  title: string
+}
+export type ChangeStatusAT = {
+  type: 'CHANGE-STATUS',
+  todoListId: string,
+  taskId: number | string
+  isDone: boolean
 }
 test('check removed task', () => {
   const endState = taskReducer(startState, RemoveTaskAC(todoListID_1, 0))

@@ -1,5 +1,5 @@
 import {TasksType} from "../App";
-import {TaskReducerType} from "./taskReducer.test";
+import {AddTaskAT, ChangeStatusAT, RemoveTaskAT,} from "./taskReducer.test";
 
 export const taskReducer = (state: TasksType, action: TaskReducerType) => {
   switch (action.type) {
@@ -19,23 +19,24 @@ export const taskReducer = (state: TasksType, action: TaskReducerType) => {
       return state
   }
 }
-export const RemoveTaskAC = (todoListId: string, taskId: string | number) => {
+type TaskReducerType = RemoveTaskAT | AddTaskAT | ChangeStatusAT
+export const RemoveTaskAC = (todoListId: string, taskId: string | number):RemoveTaskAT  => {
   return {
     type: 'REMOVE-TASK',
     todoListId: todoListId,
     taskId: taskId
   }
 }
-export const AddTaskAC = (todoListId: string, newTitle: string) => {
+export const AddTaskAC = (todoListId: string, newTitle: string): AddTaskAT => {
   return {
     type: 'ADD-TASK',
     todoListId: todoListId,
     title: newTitle,
   }
 }
-export const ChangeStatusAC = (todoListId: string, taskId: string | number, isDone: boolean) => {
+export const ChangeStatusAC = (todoListId: string, taskId: string | number, isDone: boolean) : ChangeStatusAT => {
   return {
-    type: 'CHANGE-STATUS' as const,
+    type: 'CHANGE-STATUS',
     todoListId: todoListId,
     taskId: taskId,
     isDone: isDone,
