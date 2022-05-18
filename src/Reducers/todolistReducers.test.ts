@@ -8,21 +8,21 @@ import {
 import {v1} from "uuid";
 import {FilterValuesType, TodoListType} from "../App";
 
-export type removeTodolistActionType = {
+export type RemoveTodolistAT = {
   type: 'REMOVE-TODOLIST'
   todoListId: string
 }
-export type addTodolistActionType = {
+export type AddTodolistAT = {
   type: 'ADD-TODOLIST'
   todoListId: string
   title: string
 }
-export type changeTodolistTitleActionType = {
+export type ChangeTodolistTitleAT = {
   type: 'CHANGE-TODOLIST_TITLE'
   todoListId: string
   changeValueToDoTitle: string
 }
-export type changeTodolistFilterActionType = {
+export type ChangeTodolistFilterAT = {
   type: 'CHANGE-TODOLIST_FILTER'
   todoListId: string
   filter: FilterValuesType

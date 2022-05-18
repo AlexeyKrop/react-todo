@@ -1,16 +1,16 @@
 import {FilterValuesType, TodoListType} from "../App";
 import {
-  addTodolistActionType,
-  changeTodolistFilterActionType,
-  changeTodolistTitleActionType,
-  removeTodolistActionType
+  AddTodolistAT,
+  ChangeTodolistFilterAT,
+  ChangeTodolistTitleAT,
+  RemoveTodolistAT
 } from "./todolistReducers.test";
 
 type todoListACType =
-  removeTodolistActionType
-  | addTodolistActionType
-  | changeTodolistTitleActionType
-  | changeTodolistFilterActionType
+  RemoveTodolistAT
+  | AddTodolistAT
+  | ChangeTodolistTitleAT
+  | ChangeTodolistFilterAT
 export const todolistReducer = (state: Array<TodoListType>, action: todoListACType) => {
   switch (action.type) {
     case 'REMOVE-TODOLIST':
@@ -36,21 +36,21 @@ export const todolistReducer = (state: Array<TodoListType>, action: todoListACTy
 //     todoListId: todoListId
 //   } as const
 // }
-export const RemoveTodolistAC = (todolistId: string): removeTodolistActionType => {
+export const RemoveTodolistAC = (todolistId: string): RemoveTodolistAT => {
   return {type: 'REMOVE-TODOLIST', todoListId: todolistId}
 }
-export const AddTodolistAC = (todolistId: string, newTitle: string): addTodolistActionType => {
+export const AddTodolistAC = (todolistId: string, newTitle: string): AddTodolistAT => {
   return {type: 'ADD-TODOLIST', todoListId: todolistId, title: newTitle}
 }
-export const ChangeTodolistAC = (todoListId: string, changeTitle: string): changeTodolistTitleActionType => {
+export const ChangeTodolistAC = (todoListId: string, changeTitle: string): ChangeTodolistTitleAT => {
   return {
     type: 'CHANGE-TODOLIST_TITLE',
     todoListId: todoListId,
     changeValueToDoTitle: changeTitle
   }
 }
-export const ChangeTodolistFilterAC  = (todoListId: string, newFilter: FilterValuesType): changeTodolistFilterActionType => {
-  return{
+export const ChangeTodolistFilterAC = (todoListId: string, newFilter: FilterValuesType): ChangeTodolistFilterAT => {
+  return {
     type: 'CHANGE-TODOLIST_FILTER',
     todoListId: todoListId,
     filter: newFilter
