@@ -21,21 +21,21 @@ export const taskReducer = (state: TasksType, action: TaskReducerType) => {
   }
 }
 type TaskReducerType = RemoveTaskAT | AddTaskAT | ChangeStatusAT
-export const RemoveTaskAC = (todoListId: string, taskId: string | number):RemoveTaskAT  => {
+export const removeTaskAC = (todoListId: string, taskId: string | number):RemoveTaskAT  => {
   return {
     type: 'REMOVE-TASK',
     todoListId: todoListId,
     taskId: taskId
   }
 }
-export const AddTaskAC = (todoListId: string, newTitle: string): AddTaskAT => {
+export const addTaskAC = (todoListId: string, newTitle: string): AddTaskAT => {
   return {
     type: 'ADD-TASK',
     todoListId: todoListId,
     title: newTitle,
   }
 }
-export const ChangeStatusAC = (todoListId: string, taskId: string | number, isDone: boolean) : ChangeStatusAT => {
+export const changeTaskStatusAC = (todoListId: string, taskId: string | number, isDone: boolean) : ChangeStatusAT => {
   return {
     type: 'CHANGE-STATUS',
     todoListId: todoListId,
