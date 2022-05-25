@@ -1,22 +1,5 @@
-import {addTaskAC, changeTaskStatusAC, removeTaskAC, taskReducer} from "./taskReducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, taskReducer} from "./taskReducer";
 import {TasksType} from "../App";
-
-export type RemoveTaskAT = {
-  type: 'REMOVE-TASK',
-  todoListId: string,
-  taskId: string | number
-}
-export type AddTaskAT = {
-  type: 'ADD-TASK',
-  todoListId: string,
-  title: string
-}
-export type ChangeStatusAT = {
-  type: 'CHANGE-STATUS',
-  todoListId: string,
-  taskId: number | string
-  isDone: boolean
-}
 test('check removed task', () => {
   const startState: TasksType = {
     'todolistId1': [
@@ -87,4 +70,21 @@ test('check change status in task', () => {
 
   expect(endState['todolistId2'][2].isDone).toBe(false)
   expect(endState['todolistId2'][0].isDone).toBe(false)
+})
+test('check change Task title', () => {
+  const startState: TasksType = {
+    'todolistId1': [
+      {id: '1', title: 'CSS', isDone: false},
+      {id: '2', title: 'JS', isDone: true},
+      {id: '3', title: 'React', isDone: false}
+    ],
+    'todolistId2': [
+      {id: '1', title: 'bread', isDone: false},
+      {id: '2', title: 'milk', isDone: true},
+      {id: '3', title: 'tea', isDone: false}
+    ]
+  }
+  const action = changeTaskTitleAC('todolistId2',  '2', 'coffee')
+  const endState = taskReducer(startState, action)
+  expect(endState['todolistId2'][1].title).toBe('coffee')
 })

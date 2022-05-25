@@ -1,6 +1,4 @@
 import {TasksType} from "../App";
-import {AddTaskAT, ChangeStatusAT, RemoveTaskAT,} from "./taskReducer.test";
-
 export const taskReducer = (state: TasksType, action: TaskReducerType) => {
   switch (action.type) {
     case 'REMOVE-TASK':
@@ -16,11 +14,41 @@ export const taskReducer = (state: TasksType, action: TaskReducerType) => {
           isDone: action.isDone
         } : t)
       }
+    case "CHANGE-TASK-TITLE":
+      return{
+        ...state,
+        [action.todoListId]: state[action.todoListId].map(t => t.id === action.taskId ? {
+          ...t,
+          title: action.changeValueTaskTitle
+        } : t)
+      }
     default:
       return state
   }
 }
-type TaskReducerType = RemoveTaskAT | AddTaskAT | ChangeStatusAT
+export type RemoveTaskAT = {
+  type: 'REMOVE-TASK',
+  todoListId: string,
+  taskId: string | number
+}
+export type AddTaskAT = {
+  type: 'ADD-TASK',
+  todoListId: string,
+  title: string
+}
+export type ChangeStatusAT = {
+  type: 'CHANGE-STATUS',
+  todoListId: string,
+  taskId: number | string
+  isDone: boolean
+}
+export type ChangeTaskTitleAT = {
+  type: 'CHANGE-TASK-TITLE',
+  todoListId: string,
+  taskId: number | string
+  changeValueTaskTitle: string,
+}
+type TaskReducerType = RemoveTaskAT | AddTaskAT | ChangeStatusAT | ChangeTaskTitleAT
 export const removeTaskAC = (todoListId: string, taskId: string | number):RemoveTaskAT  => {
   return {
     type: 'REMOVE-TASK',
@@ -41,5 +69,13 @@ export const changeTaskStatusAC = (todoListId: string, taskId: string | number, 
     todoListId: todoListId,
     taskId: taskId,
     isDone: isDone,
+  }
+}
+export const changeTaskTitleAC = (todoListId: string, taskId: string | number, newTitle: string): ChangeTaskTitleAT => {
+  return{
+    type: 'CHANGE-TASK-TITLE',
+    todoListId: todoListId,
+    taskId: taskId,
+    changeValueTaskTitle: newTitle,
   }
 }
