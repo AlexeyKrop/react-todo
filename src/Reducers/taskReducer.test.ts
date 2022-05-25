@@ -87,4 +87,5 @@ test('check change Task title', () => {
   const action = changeTaskTitleAC('todolistId2',  '2', 'coffee')
   const endState = taskReducer(startState, action)
   expect(endState['todolistId2'][1].title).toBe('coffee')
+  expect(endState['todolistId1'][1].title).toBe('JS')
 })
