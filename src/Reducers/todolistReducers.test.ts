@@ -29,7 +29,7 @@ export type ChangeTodolistFilterAT = {
 }
 const todoListID_1 = v1()
 const todoListID_2 = v1()
-const todoListID_3 = v1()
+export const todoListID_3 = v1()
 const startState: Array<TodoListType> = [{
   id: todoListID_1,
   title: 'What to Learn',

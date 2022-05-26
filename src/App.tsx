@@ -67,8 +67,6 @@ function App() {
       [toDiListID]: []
     })
   }
-
-  // console.log(tasks)
   function removeTask(todoListId: string, taskId: string) {
     setTasks({...tasks, [todoListId]: tasks[todoListId].filter(t => t.id !== taskId)})
   }

@@ -1,4 +1,6 @@
 import {TasksType} from "../App";
+import {AddTodolistAT} from "./todolistReducers.test";
+
 export const taskReducer = (state: TasksType, action: TaskReducerType) => {
   switch (action.type) {
     case 'REMOVE-TASK':
@@ -21,6 +23,12 @@ export const taskReducer = (state: TasksType, action: TaskReducerType) => {
           ...t,
           title: action.changeValueTaskTitle
         } : t)
+      }
+    case "ADD-TODOLIST":
+      return{
+        ...state,
+        [action.todoListId]: [],
+
       }
     default:
       return state
@@ -48,7 +56,8 @@ export type ChangeTaskTitleAT = {
   taskId: number | string
   changeValueTaskTitle: string,
 }
-type TaskReducerType = RemoveTaskAT | AddTaskAT | ChangeStatusAT | ChangeTaskTitleAT
+
+type TaskReducerType = RemoveTaskAT | AddTaskAT | ChangeStatusAT | ChangeTaskTitleAT | AddTodolistAT
 export const removeTaskAC = (todoListId: string, taskId: string | number):RemoveTaskAT  => {
   return {
     type: 'REMOVE-TASK',
