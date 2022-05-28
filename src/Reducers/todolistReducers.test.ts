@@ -7,26 +7,6 @@ import {
 } from "./todolistReducer";
 import {v1} from "uuid";
 import {TodoListType} from "../App";
-
-// export type RemoveTodolistAT = {
-//   type: 'REMOVE-TODOLIST'
-//   todoListId: string
-// }
-// export type AddTodolistAT = {
-//   type: 'ADD-TODOLIST'
-//   todoListId: string
-//   title: string
-// }
-// export type ChangeTodolistTitleAT = {
-//   type: 'CHANGE-TODOLIST_TITLE'
-//   todoListId: string
-//   changeValueToDoTitle: string
-// }
-// export type ChangeTodolistFilterAT = {
-//   type: 'CHANGE-TODOLIST_FILTER'
-//   todoListId: string
-//   filter: FilterValuesType
-// }
 const todoListID_1 = v1()
 const todoListID_2 = v1()
 export const todoListID_3 = v1()
