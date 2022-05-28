@@ -1,5 +1,5 @@
 import {TasksType} from "../App";
-import {AddTodolistAT, RemoveTodolistAT} from "./todolistReducers.test";
+import {AddTodolistAT, RemoveTodolistAT} from "./todolistReducer";
 
 export const taskReducer = (state: TasksType, action: TaskReducerType) => {
   switch (action.type) {
