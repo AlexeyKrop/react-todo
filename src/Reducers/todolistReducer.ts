@@ -1,12 +1,7 @@
 import {FilterValuesType, TodoListType} from "../App";
-import {
-  AddTodolistAT,
-  ChangeTodolistFilterAT,
-  ChangeTodolistTitleAT,
-  RemoveTodolistAT
-} from "./todolistReducers.test";
 
-type todoListACType =
+
+export type todoListACType =
   RemoveTodolistAT
   | AddTodolistAT
   | ChangeTodolistTitleAT
@@ -50,4 +45,23 @@ export const ChangeTodolistFilterAC = (todoListId: string, newFilter: FilterValu
     todoListId: todoListId,
     filter: newFilter
   }
+}
+export type RemoveTodolistAT = {
+  type: 'REMOVE-TODOLIST'
+  todoListId: string
+}
+export type AddTodolistAT = {
+  type: 'ADD-TODOLIST'
+  todoListId: string
+  title: string
+}
+export type ChangeTodolistTitleAT = {
+  type: 'CHANGE-TODOLIST_TITLE'
+  todoListId: string
+  changeValueToDoTitle: string
+}
+export type ChangeTodolistFilterAT = {
+  type: 'CHANGE-TODOLIST_FILTER'
+  todoListId: string
+  filter: FilterValuesType
 }
