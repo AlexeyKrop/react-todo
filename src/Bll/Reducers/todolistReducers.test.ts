@@ -6,7 +6,7 @@ import {
   todolistReducer
 } from "./todolistReducer";
 import {v1} from "uuid";
-import {TodoListType} from "../App";
+import {TodoListType} from "../../App";
 const todoListID_1 = v1()
 const todoListID_2 = v1()
 export const todoListID_3 = v1()
