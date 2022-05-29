@@ -49,9 +49,6 @@ export function Todolist(props: PropsType) {
       <Button onClick={() => onClickRemoveTodoListHandler(props.todoListId)} variant="outlined" startIcon={<Delete />}>
         Delete
       </Button>
-      {/*<IconButton onClick={() => onClickRemoveTodoListHandler(props.todoListId)} aria-label="delete" size="large">*/}
-      {/*  <Delete/>*/}
-      {/*</IconButton>*/}
     </h3>
     <AddItemForm addTask={addTask}/>
     <ul style={{listStyleType: 'none', padding: 0}}>

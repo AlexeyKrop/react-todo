@@ -1,13 +1,16 @@
 import {TasksType} from "../../App";
 import {AddTodolistAT, RemoveTodolistAT} from "./todolistReducer";
+import {v1} from "uuid";
 
 export const taskReducer = (state: TasksType, action: TaskReducerType) => {
   switch (action.type) {
     case 'REMOVE-TASK':
       return {...state, [action.todoListId]: state[action.todoListId].filter(t => t.id !== action.taskId)}
+
     case 'ADD-TASK':
-      let newTask = {id: action.todoListId, title: action.title, isDone: false};
+      let newTask = {id: v1(), title: action.title, isDone: false};
       return {...state, [action.todoListId]: [newTask, ...state[action.todoListId]]}
+
     case 'CHANGE-STATUS':
       return {
         ...state,
@@ -16,6 +19,7 @@ export const taskReducer = (state: TasksType, action: TaskReducerType) => {
           isDone: action.isDone
         } : t)
       }
+
     case "CHANGE-TASK-TITLE":
       return{
         ...state,
@@ -24,13 +28,15 @@ export const taskReducer = (state: TasksType, action: TaskReducerType) => {
           title: action.changeValueTaskTitle
         } : t)
       }
-    case "ADD-TODOLIST":
+
+      case "ADD-TODOLIST":
       return{
         ...state,
         [action.todoListId]: [],
 
       }
-    case "REMOVE-TODOLIST":
+
+      case "REMOVE-TODOLIST":
 
       let copyState = {...state}
       delete copyState[action.todoListId]
@@ -75,6 +81,7 @@ export type onChangeInputValueAT = {
 }
 
 type TaskReducerType = RemoveTaskAT | AddTaskAT | ChangeStatusAT | ChangeTaskTitleAT | AddTodolistAT | RemoveTodolistAT | onChangeInputValueAT
+
 export const removeTaskAC = (todoListId: string, taskId: string | number):RemoveTaskAT  => {
   return {
     type: 'REMOVE-TASK',
@@ -82,6 +89,7 @@ export const removeTaskAC = (todoListId: string, taskId: string | number):Remove
     taskId: taskId
   }
 }
+
 export const addTaskAC = (todoListId: string, newTitle: string): AddTaskAT => {
   return {
     type: 'ADD-TASK',
@@ -89,6 +97,7 @@ export const addTaskAC = (todoListId: string, newTitle: string): AddTaskAT => {
     title: newTitle,
   }
 }
+
 export const changeTaskStatusAC = (todoListId: string, taskId: string | number, isDone: boolean) : ChangeStatusAT => {
   return {
     type: 'CHANGE-STATUS',
@@ -97,6 +106,7 @@ export const changeTaskStatusAC = (todoListId: string, taskId: string | number, 
     isDone: isDone,
   }
 }
+
 export const changeTaskTitleAC = (todoListId: string, taskId: string | number, newTitle: string): ChangeTaskTitleAT => {
   return{
     type: 'CHANGE-TASK-TITLE',
@@ -105,6 +115,7 @@ export const changeTaskTitleAC = (todoListId: string, taskId: string | number, n
     changeValueTaskTitle: newTitle,
   }
 }
+
 export const onChangeInputValueAC = (todoListId: string, taskId: string | number, changeInputValue: string): onChangeInputValueAT => {
   return{
     type: 'CHANGE-INPUT-VALUE',
