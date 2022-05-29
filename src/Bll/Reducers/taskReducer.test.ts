@@ -7,8 +7,9 @@ import {
   taskReducer
 } from "./taskReducer";
 import {TasksType} from "../../App";
-import {AddTodolistAC, RemoveTodolistAC} from "./todolistReducer";
 import {todoListID_3} from "./todolistReducers.test";
+import {addTodolistAC, removeTodolistAC} from "./todolistReducer";
+
 test('check removed task', () => {
   const startState: TasksType = {
     'todolistId1': [
@@ -111,7 +112,7 @@ test('new array should be added when new todolist is added', () => {
       {id: '3', title: 'tea', isDone: false}
     ]
   }
-  const action = AddTodolistAC(todoListID_3,'new todolist')
+  const action = addTodolistAC(todoListID_3,'new todolist')
   const endState = taskReducer(startState, action)
   const keys = Object.keys(endState)
   const newKey = keys.find(k => k != 'todolistId1' && k != 'todolistId2')
@@ -135,7 +136,7 @@ const startState: TasksType = {
     ]
   }
 
-  const action = RemoveTodolistAC('todolistId2')
+  const action = removeTodolistAC('todolistId2')
 
   const endState = taskReducer(startState, action)
 

@@ -1,14 +1,14 @@
-import React, {useReducer, useState} from 'react';
+import React, {useReducer} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 import {v1} from 'uuid';
 import {AddItemForm} from "./Components/AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import {
-  AddTodolistAC, ChangeTodolistAC,
-  ChangeTodolistFilterAC,
-  ChangeTodolistTitleAT,
-  RemoveTodolistAC,
+  addTodolistAC,
+  changeTodolistFilterAC,
+  changeTodolistTitleAC,
+  removeTodolistAC,
   todolistReducer
 } from "./Bll/Reducers/todolistReducer";
 import {
@@ -71,8 +71,8 @@ function AppWithReducers() {
 
   function addToDoList(title: string) {
     let todolistId = v1();
-    dispatchToTaskReducer(AddTodolistAC(todolistId, title))
-    dispatchToTodolistReducer(AddTodolistAC(todolistId, title))
+    dispatchToTaskReducer(addTodolistAC(todolistId, title))
+    dispatchToTodolistReducer(addTodolistAC(todolistId, title))
   }
 
   function removeTask(todoListId: string, taskId: string) {
@@ -89,12 +89,12 @@ function AppWithReducers() {
 
 
   function changeFilter(todoListId: string, value: FilterValuesType) {
-    dispatchToTodolistReducer(ChangeTodolistFilterAC(todoListId, value))
+    dispatchToTodolistReducer(changeTodolistFilterAC(todoListId, value))
   }
 
   function removeTodoList(todoListId: string) {
-    dispatchToTodolistReducer(RemoveTodolistAC(todoListId))
-    dispatchToTaskReducer(RemoveTodolistAC(todoListId))
+    dispatchToTodolistReducer(removeTodolistAC(todoListId))
+    dispatchToTaskReducer(removeTodolistAC(todoListId))
   }
 
   function onChangeInputValue(todoListId: string, taskId: string, inputValue: string) {
@@ -102,7 +102,7 @@ function AppWithReducers() {
   }
 
   function onChangeTodoListTitle(todoListId: string, changeValueToDoTitle: string) {
-    dispatchToTodolistReducer(ChangeTodolistAC(todoListId, changeValueToDoTitle))
+    dispatchToTodolistReducer(changeTodolistTitleAC(todoListId, changeValueToDoTitle))
   }
 
   return (
