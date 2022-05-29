@@ -63,8 +63,14 @@ export type ChangeTaskTitleAT = {
   taskId: number | string
   changeValueTaskTitle: string,
 }
+export type onChangeInputValueAT = {
+  type: 'CHANGE-INPUT-VALUE',
+  todoListId: string,
+  taskId: number | string
+  title: string,
+}
 
-type TaskReducerType = RemoveTaskAT | AddTaskAT | ChangeStatusAT | ChangeTaskTitleAT | AddTodolistAT | RemoveTodolistAT
+type TaskReducerType = RemoveTaskAT | AddTaskAT | ChangeStatusAT | ChangeTaskTitleAT | AddTodolistAT | RemoveTodolistAT | onChangeInputValueAT
 export const removeTaskAC = (todoListId: string, taskId: string | number):RemoveTaskAT  => {
   return {
     type: 'REMOVE-TASK',
@@ -93,5 +99,13 @@ export const changeTaskTitleAC = (todoListId: string, taskId: string | number, n
     todoListId: todoListId,
     taskId: taskId,
     changeValueTaskTitle: newTitle,
+  }
+}
+export const onChangeInputValueAC = (todoListId: string, taskId: string, changeInputValue: string): onChangeInputValueAT => {
+  return{
+    type: 'CHANGE-INPUT-VALUE',
+    todoListId: todoListId,
+    taskId: taskId,
+    title: changeInputValue,
   }
 }
