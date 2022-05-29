@@ -105,7 +105,7 @@ export const changeTaskTitleAC = (todoListId: string, taskId: string | number, n
     changeValueTaskTitle: newTitle,
   }
 }
-export const onChangeInputValueAC = (todoListId: string, taskId: string, changeInputValue: string): onChangeInputValueAT => {
+export const onChangeInputValueAC = (todoListId: string, taskId: string | number, changeInputValue: string): onChangeInputValueAT => {
   return{
     type: 'CHANGE-INPUT-VALUE',
     todoListId: todoListId,
