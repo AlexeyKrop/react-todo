@@ -36,7 +36,11 @@ export const taskReducer = (state: TasksType, action: TaskReducerType) => {
       delete copyState[action.todoListId]
       return copyState
 
-
+    case "CHANGE-INPUT-VALUE":
+      return{
+        ...state,
+        [action.todoListId]: state[action.todoListId].map(t => t.id === action.taskId ? {...t, title: action.changeInputValue} : t)
+      }
     default:
       return state
   }
@@ -67,7 +71,7 @@ export type onChangeInputValueAT = {
   type: 'CHANGE-INPUT-VALUE',
   todoListId: string,
   taskId: number | string
-  title: string,
+  changeInputValue: string,
 }
 
 type TaskReducerType = RemoveTaskAT | AddTaskAT | ChangeStatusAT | ChangeTaskTitleAT | AddTodolistAT | RemoveTodolistAT | onChangeInputValueAT
@@ -106,6 +110,6 @@ export const onChangeInputValueAC = (todoListId: string, taskId: string, changeI
     type: 'CHANGE-INPUT-VALUE',
     todoListId: todoListId,
     taskId: taskId,
-    title: changeInputValue,
+    changeInputValue: changeInputValue,
   }
 }
