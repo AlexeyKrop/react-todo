@@ -8,3 +8,5 @@ const rootReducers = combineReducers({
 })
 export const store = createStore(rootReducers)
 export type AppStateType = ReturnType<typeof rootReducers>
+// @ts-ignore
+window.store = store
