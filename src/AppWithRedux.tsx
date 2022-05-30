@@ -55,7 +55,7 @@ function AppWithRedux() {
     ],
   })
 
-  const addToDoList = (title: string) => {
+  function addToDoList (title: string){
     let toDiListID = v1();
     let newToDoList: TodoListType = {
       id: toDiListID,
@@ -68,6 +68,7 @@ function AppWithRedux() {
       [toDiListID]: []
     })
   }
+
   function removeTask(todoListId: string, taskId: string) {
     setTasks({...tasks, [todoListId]: tasks[todoListId].filter(t => t.id !== taskId)})
   }
@@ -81,7 +82,6 @@ function AppWithRedux() {
     setTasks({...tasks, [todoListId]: tasks[todoListId].map(t => t.id === taskId ? {...t, isDone} : t)})
   }
 
-
   function changeFilter(todoListId: string, value: FilterValuesType) {
     setTodoList(todoList.map(t => t.id === todoListId ? {...t, filter: value} : t))
   }
@@ -91,7 +91,7 @@ function AppWithRedux() {
     delete tasks[todoListId]
   }
 
-  const onChangeInputValue = (todoListId: string, taskId: string, inputValue: string) => {
+  function onChangeInputValue(todoListId: string, taskId: string, inputValue: string){
     setTasks(
       {
         ...tasks,
@@ -99,11 +99,13 @@ function AppWithRedux() {
       }
     )
   }
-  const onChangeTodoListTitle = (todoListId: string, changeValueToDoTitle: string) => {
+
+  function onChangeTodoListTitle(todoListId: string, changeValueToDoTitle: string){
     setTodoList(
       todoList.map(t => t.id === todoListId ? {...t, title: changeValueToDoTitle} : t)
     )
   }
+
   return (
     <div className="App">
       <AppBar position="static">
