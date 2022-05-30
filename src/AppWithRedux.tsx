@@ -54,6 +54,7 @@ function AppWithRedux() {
       {id: v1(), title: "cola", isDone: false},
     ],
   })
+
   const addToDoList = (title: string) => {
     let toDiListID = v1();
     let newToDoList: TodoListType = {
