@@ -36,21 +36,27 @@ export const Todolist = React.memo((props: PropsType) => {
   if (props.filter === "completed") {
     tasksForTodolist = props.tasks.filter(t => t.isDone);
   }
-  console.log('Todolist called')
+
   const addTask = useCallback ((title: string) => {
     if (title.trim() !== "") {
       props.addTask(props.todoListId, title.trim());
     }
-  },[])
-  const onAllClickHandler = () => props.changeFilter(props.todoListId, "all");
-  const onActiveClickHandler = () => props.changeFilter(props.todoListId, "active");
-  const onCompletedClickHandler = () => props.changeFilter(props.todoListId, "completed");
+  },[props.addTask, props.todoListId])
+
+  const onAllClickHandler = useCallback(() => props.changeFilter(props.todoListId, "all"),[props.changeFilter,props.todoListId]);
+
+  const onActiveClickHandler = useCallback(() => props.changeFilter(props.todoListId, "active"),[props.changeFilter,props.todoListId]);
+
+  const onCompletedClickHandler = useCallback(() => props.changeFilter(props.todoListId, "completed"),[props.changeFilter,props.todoListId]);
+
   const onClickRemoveTodoListHandler = (todoListId: string) => {
     props.removeTodoList(todoListId)
   }
-  const onChangeInputValue = (inputValue: string) => {
+
+  const onChangeInputValue = useCallback( (inputValue: string) => {
     props.onChangeTodoListTitle(props.todoListId, inputValue)
-  }
+  },[props.onChangeTodoListTitle,props.todoListId])
+
   return <div>
     <h3>
       <EditableSpan callBack={onChangeInputValue} title={props.title}/>
