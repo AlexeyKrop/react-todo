@@ -61,7 +61,7 @@ export const Todolist = React.memo((props: PropsType) => {
     <AddItemForm addTask={addTask}/>
     <ul style={{listStyleType: 'none', padding: 0}}>
       {
-        props.tasks.map(t => {
+        tasksForTodolist.map(t => {
           const onClickHandler = () => props.removeTask(props.todoListId, t.id)
           const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
             props.changeTaskStatus(props.todoListId, t.id, e.currentTarget.checked);
