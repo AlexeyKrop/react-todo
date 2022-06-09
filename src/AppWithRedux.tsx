@@ -44,31 +44,31 @@ function AppWithRedux() {
 
   const removeTask = useCallback( (todoListId: string, taskId: string) => {
     dispatch(removeTaskAC(todoListId, taskId))
-  }, [])
+  }, [dispatch])
 
   const addTask = useCallback((todoListId: string, title: string) => {
     dispatch(addTaskAC(todoListId,title))
-  }, [])
+  }, [dispatch])
 
   const changeTaskStatus = useCallback((todoListId: string, taskId: string, isDone: boolean) => {
     dispatch(changeTaskStatusAC(todoListId, taskId, isDone))
-  },[])
+  },[dispatch])
 
   const changeTodolistFilter = useCallback((todoListId: string, value: FilterValuesType) => {
     dispatch(changeTodolistFilterAC(todoListId, value))
-  },[])
+  },[dispatch])
 
   const removeTodoList = useCallback((todoListId: string) => {
    dispatch(removeTodolistAC(todoListId))
-  }, [])
+  }, [dispatch])
 
   const onChangeInputValue = useCallback((todoListId: string, taskId: string, inputValue: string) => {
     dispatch(onChangeInputValueAC(todoListId, taskId, inputValue))
-  },[])
+  },[dispatch])
 
   const onChangeTodoListTitle = useCallback((todoListId: string, changeValueToDoTitle: string) => {
     dispatch(changeTodolistTitleAC(todoListId, changeValueToDoTitle))
-  },[])
+  },[dispatch])
 
   return (
     <div className="App">
