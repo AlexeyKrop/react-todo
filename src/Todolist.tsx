@@ -6,12 +6,12 @@ import {Button, Checkbox} from "@mui/material";
 import IconButton from '@mui/material/IconButton';
 import {Delete} from "@mui/icons-material";
 
-
 type TaskType = {
   id: string
   title: string
   isDone: boolean
 }
+
 
 type PropsType = {
   todoListId: string
@@ -29,6 +29,13 @@ type PropsType = {
 
 
 export const Todolist = React.memo((props: PropsType) => {
+  let tasksForTodolist = props.tasks;
+  if (props.filter === "active") {
+    tasksForTodolist = props.tasks.filter(t => !t.isDone);
+  }
+  if (props.filter === "completed") {
+    tasksForTodolist = props.tasks.filter(t => t.isDone);
+  }
   console.log('Todolist called')
   const addTask = useCallback ((title: string) => {
     if (title.trim() !== "") {
