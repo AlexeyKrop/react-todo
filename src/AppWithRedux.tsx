@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 import {v1} from 'uuid';
@@ -37,10 +37,10 @@ function AppWithRedux() {
   const tasks = useSelector<AppRootStateType, TasksType>(state => state.tasks)
   const dispatch = useDispatch()
 
-  function addToDoList (title: string){
+  const addToDoList = useCallback ( (title: string) => {
     let toDiListID = v1();
     dispatch(addTodolistAC(toDiListID, title))
-  }
+  },[])
 
   function removeTask(todoListId: string, taskId: string) {
     dispatch(removeTaskAC(todoListId, taskId))

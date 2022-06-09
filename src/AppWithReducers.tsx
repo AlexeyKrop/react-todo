@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react';
+import React, {useCallback, useReducer} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 import {v1} from 'uuid';
@@ -69,11 +69,11 @@ function AppWithReducers() {
     ],
   })
 
-  function addToDoList(title: string) {
+  const addToDoList = useCallback ((title: string) => {
     let todolistId = v1();
     dispatchToTaskReducer(addTodolistAC(todolistId, title))
     dispatchToTodolistReducer(addTodolistAC(todolistId, title))
-  }
+  },[])
 
   function removeTask(todoListId: string, taskId: string) {
     dispatchToTaskReducer(removeTaskAC(todoListId, taskId))
@@ -164,4 +164,4 @@ function AppWithReducers() {
   );
 }
 
-export default AppWithReducers;
+// export default AppWithReducers;

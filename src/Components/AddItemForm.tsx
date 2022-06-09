@@ -5,7 +5,7 @@ type AddItemFormType = {
   addTask: (title: string) => void
 }
 
-export function AddItemForm(props: AddItemFormType) {
+export const AddItemForm = React.memo((props: AddItemFormType) => {
   console.log('AddItemForm called')
   let [title, setTitle] = useState("")
   let [error, setError] = useState<string | null>(null)
@@ -44,4 +44,4 @@ export function AddItemForm(props: AddItemFormType) {
       {error && <div className="error-message">{error}</div>}
     </div>
   )
-}
+})
