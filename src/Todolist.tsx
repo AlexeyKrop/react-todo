@@ -28,7 +28,8 @@ type PropsType = {
 }
 
 
-export function Todolist(props: PropsType) {
+export const Todolist = React.memo((props: PropsType) => {
+  console.log('Todolist called')
   const addTask = useCallback ((title: string) => {
     if (title.trim() !== "") {
       props.addTask(props.todoListId, title.trim());
@@ -85,6 +86,6 @@ export function Todolist(props: PropsType) {
       </Button>
     </div>
   </div>
-}
+})
 
 
