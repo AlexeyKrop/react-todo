@@ -1,11 +1,10 @@
-import React, {ChangeEvent, useCallback} from 'react';
+import React, {useCallback} from 'react';
 import {FilterValuesType} from './App';
 import {AddItemForm} from "./Components/AddItemForm";
 import {EditableSpan} from "./Components/EditableSpan";
-import {Button, Checkbox} from "@mui/material";
-import IconButton from '@mui/material/IconButton';
+import {Button} from "@mui/material";
 import {Delete} from "@mui/icons-material";
-import Task from "./Components/Task";
+import Tasks from "./Components/Tasks";
 
 type TaskType = {
   id: string
@@ -70,7 +69,7 @@ export const Todolist = React.memo((props: PropsType) => {
       {
         tasksForTodolist.map(t => {
           return(
-            <Task key={t.id} todoListId={props.todoListId} removeTask={props.removeTask} changeTaskStatus={props.changeTaskStatus} onChangeInputValue={props.onChangeInputValue} task={t} />
+            <Tasks key={t.id} todoListId={props.todoListId} removeTask={props.removeTask} changeTaskStatus={props.changeTaskStatus} onChangeInputValue={props.onChangeInputValue} task={t} />
           )
         })
       }
