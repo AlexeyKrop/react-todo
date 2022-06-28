@@ -51,36 +51,15 @@ export const taskReducer = (state: TasksType = initialState, action: TaskReducer
   }
 }
 
-export type RemoveTaskAT = {
-  type: 'REMOVE-TASK',
-  todoListId: string,
-  taskId: string | number
-}
-export type AddTaskAT = {
-  type: 'ADD-TASK',
-  todoListId: string,
-  title: string
-}
-export type ChangeStatusAT = {
-  type: 'CHANGE-STATUS',
-  todoListId: string,
-  taskId: number | string
-  isDone: boolean
-}
-export type ChangeTaskTitleAT = {
-  type: 'CHANGE-TASK-TITLE',
-  todoListId: string,
-  taskId: number | string
-  changeValueTaskTitle: string,
-}
-export type onChangeInputValueAT = {
-  type: 'CHANGE-INPUT-VALUE',
-  todoListId: string,
-  taskId: number | string
-  changeInputValue: string,
-}
+
+//ACTION TYPE
+export type RemoveTaskAT = ReturnType<typeof removeTaskAC>
+export type AddTaskAT = ReturnType<typeof addTaskAC>
+export type ChangeStatusAT = ReturnType<typeof changeTaskStatusAC>
+export type ChangeTaskTitleAT = ReturnType<typeof changeTaskTitleAC>
+export type onChangeInputValueAT = ReturnType<typeof onChangeInputValueAC>
 type TaskReducerType =
-  RemoveTaskAT
+  | RemoveTaskAT
   | AddTaskAT
   | ChangeStatusAT
   | ChangeTaskTitleAT
@@ -88,45 +67,47 @@ type TaskReducerType =
   | RemoveTodolistAT
   | onChangeInputValueAT
 
-export const removeTaskAC = (todoListId: string, taskId: string | number): RemoveTaskAT => {
+export const removeTaskAC = (todoListId: string, taskId: string | number) => {
   return {
     type: 'REMOVE-TASK',
     todoListId: todoListId,
     taskId: taskId
-  }
+  } as const
 }
 
-export const addTaskAC = (todoListId: string, newTitle: string): AddTaskAT => {
+
+//ACTION CREATOR
+export const addTaskAC = (todoListId: string, newTitle: string) => {
   return {
     type: 'ADD-TASK',
     todoListId: todoListId,
     title: newTitle,
-  }
+  } as const
 }
 
-export const changeTaskStatusAC = (todoListId: string, taskId: string | number, isDone: boolean): ChangeStatusAT => {
+export const changeTaskStatusAC = (todoListId: string, taskId: string | number, isDone: boolean) => {
   return {
     type: 'CHANGE-STATUS',
     todoListId: todoListId,
     taskId: taskId,
     isDone: isDone,
-  }
+  } as const
 }
 
-export const changeTaskTitleAC = (todoListId: string, taskId: string | number, newTitle: string): ChangeTaskTitleAT => {
+export const changeTaskTitleAC = (todoListId: string, taskId: string | number, newTitle: string) => {
   return {
     type: 'CHANGE-TASK-TITLE',
     todoListId: todoListId,
     taskId: taskId,
     changeValueTaskTitle: newTitle,
-  }
+  } as const
 }
 
-export const onChangeInputValueAC = (todoListId: string, taskId: string | number, changeInputValue: string): onChangeInputValueAT => {
+export const onChangeInputValueAC = (todoListId: string, taskId: string | number, changeInputValue: string) => {
   return {
     type: 'CHANGE-INPUT-VALUE',
     todoListId: todoListId,
     taskId: taskId,
     changeInputValue: changeInputValue,
-  }
+  } as const
 }
