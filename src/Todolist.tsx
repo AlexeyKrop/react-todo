@@ -5,6 +5,7 @@ import {EditableSpan} from "./Components/EditableSpan";
 import {Button} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import Tasks from "./Components/Tasks";
+import IconButton from "@mui/material/IconButton";
 
 type TaskType = {
   id: string
@@ -49,9 +50,9 @@ export const Todolist = React.memo((props: PropsType) => {
 
   const onCompletedClickHandler = useCallback(() => props.changeFilter(props.todoListId, "completed"),[props.changeFilter,props.todoListId]);
 
-  const onClickRemoveTodoListHandler = (todoListId: string) => {
+  const onClickRemoveTodoListHandler = useCallback((todoListId: string) => {
     props.removeTodoList(todoListId)
-  }
+  }, [props.removeTodoList])
 
   const onChangeInputValue = useCallback( (inputValue: string) => {
     props.onChangeTodoListTitle(props.todoListId, inputValue)
@@ -60,9 +61,9 @@ export const Todolist = React.memo((props: PropsType) => {
   return <div>
     <h3>
       <EditableSpan callBack={onChangeInputValue} title={props.title}/>
-      <Button onClick={() => onClickRemoveTodoListHandler(props.todoListId)} variant="outlined" startIcon={<Delete />}>
-        Delete
-      </Button>
+      <IconButton onClick={() => onClickRemoveTodoListHandler(props.todoListId)} aria-label="delete" size="large">
+        <Delete/>
+      </IconButton>
     </h3>
     <AddItemForm addTask={addTask}/>
     <div style={{listStyleType: 'none', padding: 0}}>
