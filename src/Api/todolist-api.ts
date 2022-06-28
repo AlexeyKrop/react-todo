@@ -15,6 +15,9 @@ export const todolistAPI = {
   },
   createTodolist(title: string){
     return instance.post<Array<CreateTodolistResponseType>>('todo-lists', {title})
+  },
+  updateTodolist(todolistId: string, title: string){
+    return instance.put(`todo-lists/${todolistId}`, {title})
   }
 }
 
@@ -30,7 +33,14 @@ export type TodolistType = {
 export type CreateTodolistResponseType = {
   resultCode: number
   messages: Array<string>
+  fieldsErrors: Array<string>
   data: {
     item: TodolistType
   }
+}
+export type UpdateTodolistResponseType = {
+  data: {},
+  messages: Array<string>
+  fieldsErrors: Array<string>
+  resultCode: number
 }
