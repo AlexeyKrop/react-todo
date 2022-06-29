@@ -34,7 +34,7 @@ function App() {
 
   const todoList = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todoList)
   const tasks = useSelector<AppRootStateType, TasksType>(state => state.tasks)
-  const dispatch: any = useDispatch()
+  const dispatch = useDispatch()
 
   const addToDoList = useCallback ( (title: string) => {
     let toDiListID = v1();
