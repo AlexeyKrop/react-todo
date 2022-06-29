@@ -1,7 +1,8 @@
 import {AddTodolistAT, RemoveTodolistAT, SetTodolistsAT} from "./todolistReducer";
 import {TasksType} from "../../App";
 import {Dispatch} from "redux";
-import {TaskType, todolistAPI} from "../../Api/todolist-api";
+import {TaskStatuses, TaskType, todolistAPI} from "../../Api/todolist-api";
+import {RootState} from "../state/store";
 
 
 const initialState: TasksType = {}
@@ -145,3 +146,9 @@ export const addTaskTC = (todolistId: string, title: string) => {
 
   }
 }
+export const updateTaskStatusTC = (todolistId: string, taskId: string, status: TaskStatuses) => {
+  return (dispatch: Dispatch, getState: () => RootState) => {
+    console.log(getState().tasks[todolistId])
+  }
+}
+
