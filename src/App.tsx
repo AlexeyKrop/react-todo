@@ -29,13 +29,14 @@ function MenuIcon() {
 
 function App() {
 
-  useEffect(() => {
-      dispatch(fetchTodolistThunk)
-  }, [])
 
   const todoList = useSelector<RootState, Array<TodolistDomainType>>(state => state.todoList)
   const tasks = useSelector<RootState, TasksType>(state => state.tasks)
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(fetchTodolistThunk)
+  }, [dispatch])
 
   const addToDoList = useCallback ( (title: string) => {
     let toDiListID = v1();

@@ -36,21 +36,21 @@ export const Todolist = React.memo((props: PropsType) => {
     if (title.trim() !== "") {
       props.addTask(props.todoListId, title.trim());
     }
-  },[props.addTask, props.todoListId])
+  },[props])
 
-  const onAllClickHandler = useCallback(() => props.changeFilter(props.todoListId, "all"),[props.changeFilter,props.todoListId]);
+  const onAllClickHandler = useCallback(() => props.changeFilter(props.todoListId, "all"),[props]);
 
-  const onActiveClickHandler = useCallback(() => props.changeFilter(props.todoListId, "active"),[props.changeFilter,props.todoListId]);
+  const onActiveClickHandler = useCallback(() => props.changeFilter(props.todoListId, "active"),[props]);
 
-  const onCompletedClickHandler = useCallback(() => props.changeFilter(props.todoListId, "completed"),[props.changeFilter,props.todoListId]);
+  const onCompletedClickHandler = useCallback(() => props.changeFilter(props.todoListId, "completed"),[props]);
 
   const onClickRemoveTodoListHandler = useCallback((todoListId: string) => {
     props.removeTodoList(todoListId)
-  }, [props.removeTodoList])
+  }, [props])
 
   const onChangeInputValue = useCallback( (inputValue: string) => {
     props.onChangeTodoListTitle(props.todoListId, inputValue)
-  },[props.onChangeTodoListTitle,props.todoListId])
+  },[props])
 
   return <div>
     <h3>

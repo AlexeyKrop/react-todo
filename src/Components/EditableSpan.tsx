@@ -18,7 +18,7 @@ export const EditableSpan = React.memo((props: EditableSpanType) => {
   const changeTaskValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.currentTarget.value)
     props.callBack(e.currentTarget.value)
-  },[props.callBack])
+  },[props])
   return (
     <>
       {!editMode ? <span style={{marginRight: '10px'}} onDoubleClick={onClickDoubleHandler}>{props.title}</span> : <Input onChange={changeTaskValue} value={inputValue} onBlur={onClickDoubleHandler} autoFocus type="text"/>}
