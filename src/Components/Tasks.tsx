@@ -23,8 +23,8 @@ const Tasks = React.memo((props: TaskPropsType) => {
     props.onChangeInputValue(props.todoListId, props.task.id, inputValue)
   },[props])
 
-  return <div className={props.task.completed ? "is-done" : ""}>
-    <Checkbox onChange={onChangeHandler} checked={props.task.completed}/>
+  return <div className={props.task.status === TaskStatuses.Completed ? "is-done" : ""}>
+    <Checkbox onChange={onChangeHandler} checked={props.task.status === TaskStatuses.Completed}/>
   <EditableSpan callBack={onChangeInputValue} title={props.task.title}/>
   <IconButton onClick={onClickHandler} aria-label="delete" size="large">
     <Delete/>
