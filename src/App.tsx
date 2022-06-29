@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
-import {v1} from 'uuid';
 import {AddItemForm} from "./Components/AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import {useSelector} from "react-redux";
@@ -9,8 +8,7 @@ import {RootState} from "./Bll/state/store";
 import {
   addTodolistAC,
   changeTodolistFilterAC,
-  changeTodolistTitleAC,
-  fetchTodolistThunk,
+  changeTodolistTitleAC, fetchTodolistsTC,
   removeTodolistAC,
   TodolistDomainType
 } from "./Bll/Reducers/todolistReducer";
@@ -35,11 +33,10 @@ function App() {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(fetchTodolistThunk)
+    dispatch(fetchTodolistsTC())
   }, [dispatch])
 
   const addToDoList = useCallback ( (title: string) => {
-    // let toDiListID = v1();
     dispatch(addTodolistAC(title))
   },[dispatch])
 

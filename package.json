@@ -1,5 +1,5 @@
 {
-  "name": "todo14v2",
+  "name": "todolist",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -20,7 +20,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.5",
-    "react-scripts": "4.0.3",
+    "react-scripts": "^5.0.1",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
     "thunk": "^0.0.1",
@@ -51,5 +51,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-error-overlay": "6.0.9"
+  },
+  "resolutions": {
+    "//": "See https://github.com/facebook/create-react-app/issues/11773",
+    "react-error-overlay": "6.0.9"
   }
 }

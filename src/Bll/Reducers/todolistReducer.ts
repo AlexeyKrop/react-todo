@@ -18,7 +18,7 @@ export type todoListACType =
   | ChangeTodolistFilterAT
 
 const initialState: Array<TodolistDomainType> = []
-export const todolistReducer = (state: Array<TodolistDomainType> = initialState, action: todoListACType): Array<TodolistDomainType>  => {
+export const todolistReducer = (state: Array<TodolistDomainType> = initialState, action: todoListACType): Array<TodolistDomainType> => {
 
   switch (action.type) {
     case "SET-TODOLISTS":
@@ -44,7 +44,10 @@ export const todolistReducer = (state: Array<TodolistDomainType> = initialState,
 }
 
 //ACTION CREATOR
-export const setTodolistsAC = (todolists: Array<TodolistDomainType>) => ({type: 'SET-TODOLISTS', todolists: todolists} as const)
+export const setTodolistsAC = (todolists: Array<TodolistDomainType>) => ({
+  type: 'SET-TODOLISTS',
+  todolists: todolists
+} as const)
 
 export const removeTodolistAC = (todolistId: string) => ({
   type: 'REMOVE-TODOLIST',
@@ -70,9 +73,11 @@ export const changeTodolistFilterAC = (todoListId: string, newFilter: FilterValu
 } as const)
 
 //THUNK CREATOR
-
-export const fetchTodolistThunk = (dispatch: Dispatch) => {
-  todolistAPI.getTodolist().then(res => {
-    dispatch(setTodolistsAC(res.data))
-  })
+export const fetchTodolistsTC = () => {
+  return (dispatch: Dispatch) => {
+    todolistAPI.getTodolist()
+      .then(res => {
+        dispatch(setTodolistsAC(res.data))
+      })
+  }
 }

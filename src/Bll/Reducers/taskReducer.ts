@@ -16,7 +16,7 @@ export const taskReducer = (state: TasksType = initialState, action: TaskReducer
         stateCopy[t.id] = []
       })
       return stateCopy
-    case "SET-TASK": {
+    case "SET-TASKS": {
       return {...state, [action.todolistId]: action.tasks}
     }
     case 'REMOVE-TASK':
@@ -83,7 +83,7 @@ type TaskReducerType =
   | SetTaskAT
 
 //ACTION CREATOR
-export const setTasksAC = (todolistId: string, tasks: Array<TaskType>,) => ({type: 'SET-TASK', todolistId: todolistId, tasks: tasks} as const)
+export const setTasksAC = (todolistId: string, tasks: Array<TaskType>,) => ({type: 'SET-TASKS', todolistId: todolistId, tasks: tasks} as const)
 export const removeTaskAC = (todoListId: string, taskId: string | number) => {
   return {
     type: 'REMOVE-TASK',
