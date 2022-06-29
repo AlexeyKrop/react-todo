@@ -4,8 +4,8 @@ import {Todolist} from './Todolist';
 import {v1} from 'uuid';
 import {AddItemForm} from "./Components/AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./Bll/state/store";
+import {useSelector} from "react-redux";
+import {RootState} from "./Bll/state/store";
 import {
   addTodolistAC,
   changeTodolistFilterAC,
@@ -16,6 +16,7 @@ import {
 } from "./Bll/Reducers/todolistReducer";
 import {addTaskAC, changeTaskStatusAC, onChangeInputValueAC, removeTaskAC} from "./Bll/Reducers/taskReducer";
 import {FilterValuesType, TaskType} from "./Api/todolist-api";
+import {useAppDispatch} from "./Bll/state/hooks";
 
 export type TasksType = {
   [key: string]: Array<TaskType>
@@ -32,14 +33,14 @@ function App() {
       dispatch(fetchTodolistThunk)
   }, [])
 
-  const todoList = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todoList)
-  const tasks = useSelector<AppRootStateType, TasksType>(state => state.tasks)
-  const dispatch = useDispatch()
+  const todoList = useSelector<RootState, Array<TodolistDomainType>>(state => state.todoList)
+  const tasks = useSelector<RootState, TasksType>(state => state.tasks)
+  const dispatch = useAppDispatch()
 
   const addToDoList = useCallback ( (title: string) => {
     let toDiListID = v1();
     dispatch(addTodolistAC(toDiListID, title))
-  },[])
+  },[dispatch])
 
   const removeTask = useCallback( (todoListId: string, taskId: string) => {
     dispatch(removeTaskAC(todoListId, taskId))
