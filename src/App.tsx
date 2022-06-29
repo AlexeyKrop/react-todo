@@ -15,15 +15,12 @@ import {
   TodolistDomainType
 } from "./Bll/Reducers/todolistReducer";
 import {addTaskAC, changeTaskStatusAC, onChangeInputValueAC, removeTaskAC} from "./Bll/Reducers/taskReducer";
-import {FilterValuesType} from "./Api/todolist-api";
+import {FilterValuesType, TaskType} from "./Api/todolist-api";
 
 export type TasksType = {
-  [id: string]: Array<{
-    id: string,
-    title: string,
-    isDone: boolean
-  }>
+  [key: string]: Array<TaskType>
 }
+
 
 function MenuIcon() {
   return null;

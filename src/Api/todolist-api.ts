@@ -58,8 +58,8 @@ export type TaskType = {
   description: string
   title: string
   completed: boolean
-  status: number
-  priority: number
+  status: TaskStatuses
+  priority: TaskPriorities
   startDate: string
   deadline: string
   id: string

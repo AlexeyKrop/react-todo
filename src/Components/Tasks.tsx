@@ -3,17 +3,14 @@ import {Checkbox} from "@mui/material";
 import {EditableSpan} from "./EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import {Delete} from "@mui/icons-material";
+import {TaskType} from "../Api/todolist-api";
 
 type TaskPropsType = {
   removeTask: (todoListId: string, taskId: string) => void
   changeTaskStatus: (todoListId: string, taskId: string, isDone: boolean) => void
   onChangeInputValue: (todoListId: string, taskId: string, changeInputValue: string) => void
   todoListId: string
-  task: {
-    id: string
-    isDone: boolean
-    title: string
-  }
+  task: TaskType
 }
 const Tasks = React.memo((props: TaskPropsType) => {
   const onClickHandler = useCallback(() => props.removeTask(props.todoListId, props.task.id),[props.todoListId, props.task.id])
@@ -26,8 +23,8 @@ const Tasks = React.memo((props: TaskPropsType) => {
     props.onChangeInputValue(props.todoListId, props.task.id, inputValue)
   },[props.onChangeInputValue,props.todoListId, props.task.id])
 
-  return <div className={props.task.isDone ? "is-done" : ""}>
-    <Checkbox onChange={onChangeHandler} checked={props.task.isDone}/>
+  return <div className={props.task.completed ? "is-done" : ""}>
+    <Checkbox onChange={onChangeHandler} checked={props.task.completed}/>
   <EditableSpan callBack={onChangeInputValue} title={props.task.title}/>
   <IconButton onClick={onClickHandler} aria-label="delete" size="large">
     <Delete/>

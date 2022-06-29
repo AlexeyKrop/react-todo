@@ -5,13 +5,7 @@ import {Button} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import Tasks from "./Components/Tasks";
 import IconButton from "@mui/material/IconButton";
-import {FilterValuesType} from "./Api/todolist-api";
-
-type TaskType = {
-  id: string
-  title: string
-  isDone: boolean
-}
+import {FilterValuesType, TaskType} from "./Api/todolist-api";
 
 
 type PropsType = {
@@ -32,10 +26,10 @@ type PropsType = {
 export const Todolist = React.memo((props: PropsType) => {
   let tasksForTodolist = props.tasks;
   if (props.filter === "active") {
-    tasksForTodolist = props.tasks.filter(t => !t.isDone);
+    tasksForTodolist = props.tasks.filter(t => !t.completed);
   }
   if (props.filter === "completed") {
-    tasksForTodolist = props.tasks.filter(t => t.isDone);
+    tasksForTodolist = props.tasks.filter(t => t.completed);
   }
 
   const addTask = useCallback ((title: string) => {
