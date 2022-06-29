@@ -13,7 +13,7 @@ import {
   removeTodolistAC,
   TodolistDomainType
 } from "./Bll/Reducers/todolistReducer";
-import {addTaskAC, changeTaskStatusAC, onChangeInputValueAC, removeTaskTC} from "./Bll/Reducers/taskReducer";
+import {addTaskTC, changeTaskStatusAC, onChangeInputValueAC, removeTaskTC} from "./Bll/Reducers/taskReducer";
 import {FilterValuesType, TaskType} from "./Api/todolist-api";
 import {useAppDispatch} from "./Bll/state/hooks";
 
@@ -46,7 +46,7 @@ function App() {
   }, [dispatch])
 
   const addTask = useCallback((todoListId: string, title: string) => {
-    dispatch(addTaskAC(todoListId,title))
+    dispatch(addTaskTC(todoListId, title))
   }, [dispatch])
 
   const changeTaskStatus = useCallback((todoListId: string, taskId: string, isDone: boolean) => {

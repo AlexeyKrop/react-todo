@@ -27,9 +27,11 @@ type PropsType = {
 
 export const Todolist = React.memo((props: PropsType) => {
   const dispatch = useAppDispatch()
+
   useEffect(()=> {
     dispatch(fetchTasksTC(props.todoListId))
   }, [dispatch])
+
   let tasksForTodolist = props.tasks;
   if (props.filter === "active") {
     tasksForTodolist = props.tasks.filter(t => !t.completed);
