@@ -1,11 +1,11 @@
 import React, {useCallback} from 'react';
-import {FilterValuesType} from './App';
 import {AddItemForm} from "./Components/AddItemForm";
 import {EditableSpan} from "./Components/EditableSpan";
 import {Button} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import Tasks from "./Components/Tasks";
 import IconButton from "@mui/material/IconButton";
+import {FilterValuesType} from "./Api/todolist-api";
 
 type TaskType = {
   id: string

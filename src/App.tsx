@@ -1,16 +1,22 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 import {v1} from 'uuid';
 import {AddItemForm} from "./Components/AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "./Bll/state/store";
+import {
+  addTodolistAC,
+  changeTodolistFilterAC,
+  changeTodolistTitleAC,
+  removeTodolistAC,
+  setTodolistsAC,
+  TodolistDomainType
+} from "./Bll/Reducers/todolistReducer";
+import {addTaskAC, changeTaskStatusAC, onChangeInputValueAC, removeTaskAC} from "./Bll/Reducers/taskReducer";
+import {FilterValuesType, todolistAPI} from "./Api/todolist-api";
 
-export type FilterValuesType = "all" | "active" | "completed";
-export type TodoListType = {
-  id: string,
-  title: string,
-  filter: FilterValuesType
-}
 export type TasksType = {
   [id: string]: Array<{
     id: string,
@@ -24,87 +30,49 @@ function MenuIcon() {
 }
 
 function App() {
-  let todoListID_1 = v1()
-  let todoListID_2 = v1()
-  let [todoList, setTodoList] = useState<Array<TodoListType>>([
-    {
-      id: todoListID_1,
-      title: 'What to Learn',
-      filter: 'all'
-    },
-    {
-      id: todoListID_2,
-      title: 'What to bue',
-      filter: 'all'
-    },
-  ])
-  let [tasks, setTasks] = useState<TasksType>({
-    [todoListID_1]: [
-      {id: v1(), title: "HTML&CSS", isDone: true},
-      {id: v1(), title: "JS", isDone: true},
-      {id: v1(), title: "ReactJS", isDone: false},
-      {id: v1(), title: "Rest API", isDone: false},
-      {id: v1(), title: "GraphQL", isDone: false},
-    ],
-    [todoListID_2]: [
-      {id: v1(), title: "milk", isDone: true},
-      {id: v1(), title: "solt", isDone: true},
-      {id: v1(), title: "beer", isDone: false},
-      {id: v1(), title: "juice", isDone: false},
-      {id: v1(), title: "cola", isDone: false},
-    ],
-  })
 
-  function addToDoList(title: string){
-    let toDiListID = v1();
-    let newToDoList: TodoListType = {
-      id: toDiListID,
-      title: title,
-      filter: "all",
-    }
-    setTodoList([newToDoList, ...todoList])
-    setTasks({
-      ...tasks,
-      [toDiListID]: []
+  useEffect(() => {
+    todolistAPI.getTodolist().then(res => {
+      dispatch(setTodolistsAC(res.data))
     })
-  }
+  }, [])
 
-  function removeTask(todoListId: string, taskId: string) {
-    setTasks({...tasks, [todoListId]: tasks[todoListId].filter(t => t.id !== taskId)})
-  }
+  const todoList = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todoList)
+  const tasks = useSelector<AppRootStateType, TasksType>(state => state.tasks)
+  const dispatch = useDispatch()
 
-  function addTask(todoListId: string, title: string) {
-    let newTask = {id: v1(), title: title, isDone: false};
-    setTasks({...tasks, [todoListId]: [newTask, ...tasks[todoListId]]})
-  }
+  const addToDoList = useCallback ( (title: string) => {
+    let toDiListID = v1();
+    dispatch(addTodolistAC(toDiListID, title))
+  },[])
 
-  function changeStatus(todoListId: string, taskId: string, isDone: boolean) {
-    setTasks({...tasks, [todoListId]: tasks[todoListId].map(t => t.id === taskId ? {...t, isDone} : t)})
-  }
+  const removeTask = useCallback( (todoListId: string, taskId: string) => {
+    dispatch(removeTaskAC(todoListId, taskId))
+  }, [dispatch])
 
-  function changeFilter(todoListId: string, value: FilterValuesType) {
-    setTodoList(todoList.map(t => t.id === todoListId ? {...t, filter: value} : t))
-  }
+  const addTask = useCallback((todoListId: string, title: string) => {
+    dispatch(addTaskAC(todoListId,title))
+  }, [dispatch])
 
-  function removeTodoList(todoListId: string) {
-    setTodoList(todoList.filter(t => t.id !== todoListId))
-    delete tasks[todoListId]
-  }
+  const changeTaskStatus = useCallback((todoListId: string, taskId: string, isDone: boolean) => {
+    dispatch(changeTaskStatusAC(todoListId, taskId, isDone))
+  },[dispatch])
 
-  function onChangeInputValue(todoListId: string, taskId: string, inputValue: string){
-    setTasks(
-      {
-        ...tasks,
-        [todoListId]: tasks[todoListId].map(t => t.id === taskId ? {...t, title: inputValue} : t)
-      }
-    )
-  }
+  const changeTodolistFilter = useCallback((todoListId: string, value: FilterValuesType) => {
+    dispatch(changeTodolistFilterAC(todoListId, value))
+  },[dispatch])
 
-  function onChangeTodoListTitle(todoListId: string, changeValueToDoTitle: string){
-    setTodoList(
-      todoList.map(t => t.id === todoListId ? {...t, title: changeValueToDoTitle} : t)
-    )
-  }
+  const removeTodoList = useCallback((todoListId: string) => {
+   dispatch(removeTodolistAC(todoListId))
+  }, [dispatch])
+
+  const onChangeInputValue = useCallback((todoListId: string, taskId: string, inputValue: string) => {
+    dispatch(onChangeInputValueAC(todoListId, taskId, inputValue))
+  },[dispatch])
+
+  const onChangeTodoListTitle = useCallback((todoListId: string, changeValueToDoTitle: string) => {
+    dispatch(changeTodolistTitleAC(todoListId, changeValueToDoTitle))
+  },[dispatch])
 
   return (
     <div className="App">
@@ -132,24 +100,17 @@ function App() {
         <Grid container direction="row"
               alignItems="flex-start">
           {todoList.map(t => {
-            let tasksForTodolist = tasks[t.id];
-            if (t.filter === "active") {
-              tasksForTodolist = tasks[t.id].filter(t => !t.isDone);
-            }
-            if (t.filter === "completed") {
-              tasksForTodolist = tasks[t.id].filter(t => t.isDone);
-            }
             return (
               <Grid style={{padding: '20px 0'}} key={t.id}>
                 <Paper style={{padding: '20px', marginRight: '10px'}}>
                   <Todolist todoListId={t.id}
                             key={t.id}
                             title={t.title}
-                            tasks={tasksForTodolist}
+                            tasks={tasks[t.id]}
                             removeTask={removeTask}
-                            changeFilter={changeFilter}
+                            changeFilter={changeTodolistFilter}
                             addTask={addTask}
-                            changeTaskStatus={changeStatus}
+                            changeTaskStatus={changeTaskStatus}
                             removeTodoList={removeTodoList}
                             filter={t.filter}
                             onChangeInputValue={onChangeInputValue}
@@ -165,4 +126,4 @@ function App() {
   );
 }
 
-// export default App;
+export default App;
