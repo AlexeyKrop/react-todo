@@ -5,7 +5,6 @@ import {v1} from "uuid";
 const initialState: TasksType = {}
 
 export const taskReducer = (state: TasksType = initialState, action: TaskReducerType) => {
-  debugger
   switch (action.type) {
     case "SET-TODOLISTS":
         const stateCopy = {...state}

@@ -34,7 +34,6 @@ function AppWithRedux() {
   useEffect(() => {
     todolistAPI.getTodolist().then(res => {
       dispatch(setTodolistsAC(res.data))
-      console.log(res.data)
     })
   }, [])
 
