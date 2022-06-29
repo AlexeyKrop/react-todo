@@ -20,11 +20,7 @@ import {
 } from "./Bll/Reducers/taskReducer";
 
 export type FilterValuesType = "all" | "active" | "completed";
-export type TodoListType = {
-  id: string,
-  title: string,
-  filter: FilterValuesType
-}
+
 export type TasksType = {
   [id: string]: Array<{
     id: string,
@@ -40,18 +36,7 @@ function MenuIcon() {
 function AppWithReducers() {
   let todoListID_1 = v1()
   let todoListID_2 = v1()
-  let [todoList, dispatchToTodolistReducer] = useReducer(todolistReducer, [
-    {
-      id: todoListID_1,
-      title: 'What to Learn',
-      filter: 'all'
-    },
-    {
-      id: todoListID_2,
-      title: 'What to bue',
-      filter: 'all'
-    },
-  ])
+  let [todoList, dispatchToTodolistReducer] = useReducer(todolistReducer, [])
   let [tasks, dispatchToTaskReducer] = useReducer(taskReducer, {
     [todoListID_1]: [
       {id: v1(), title: "HTML&CSS", isDone: true},

@@ -1,4 +1,5 @@
 import axios from "axios";
+import {TodolistDomainType} from "../Bll/Reducers/todolistReducer";
 //settings
 const instance = axios.create({
   baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -11,7 +12,7 @@ const instance = axios.create({
 //api
 export const todolistAPI = {
   getTodolist(){
-    return instance.get<Array<ResponseType<{item: TodolistType}>>>('todo-lists')
+    return instance.get<Array<TodolistDomainType>>('todo-lists')
   },
   createTodolist(title: string){
     return instance.post<ResponseType>('todo-lists', {title})
@@ -40,11 +41,12 @@ export const todolistAPI = {
 
 
 //Type
-export type TodolistType = {
+export type FilterValuesType = "all" | "active" | "completed";
+export type TodolistType =  {
   id: string
+  title: string
   addedDate: string
   order: number
-  title: string
 }
 export type ResponseType<D = {}> = {
   resultCode: number

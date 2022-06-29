@@ -1,14 +1,14 @@
 import {
   addTodolistAC,
-  changeTodolistTitleAC,
   changeTodolistFilterAC,
+  changeTodolistTitleAC,
   removeTodolistAC,
+  TodolistDomainType,
   todolistReducer
 } from "./todolistReducer";
 import {v1} from "uuid";
-import {TodoListType} from "../../App";
 
-let startState: Array<TodoListType> = []
+let startState: Array<TodolistDomainType> = []
 let todoListID_1: string
 let todoListID_2: string
 export const todoListID_3 = v1()
@@ -17,16 +17,21 @@ beforeEach(() => {
   todoListID_1 = v1()
   todoListID_2 = v1()
   startState = [
-    {
-      id: todoListID_1,
-      title: 'What to Learn',
-      filter: 'all'
-    },
-    {
-      id: todoListID_2,
-      title: 'What to bue',
-      filter: 'all'
-    }]
+    {id: 'a4b4f1bf-7a69-4780-b7d3-69cbbace6273',
+      title: 'JS+REACT the best',
+      addedDate: '2022-06-28T18:14:01.19',
+      order: -6,
+      filter: 'all'}]
+})
+
+test('check set todolist in server', () => {
+  const todo = {
+    id: 'a4b4f1bf-7a69-4780-b7d3-69cbbace6273',
+    title: 'JS+REACT the best',
+    addedDate: '2022-06-28T18:14:01.19',
+    order: -6,
+    filter: 'all'}
+  // const endState = todolistReducer([], setTodolistAC(todo))
 })
 
 test('check removed todolist', () => {
