@@ -8,11 +8,12 @@ import {RootState} from "./Bll/state/store";
 import {
   addTodolistAC,
   changeTodolistFilterAC,
-  changeTodolistTitleAC, fetchTodolistsTC,
+  changeTodolistTitleAC,
+  fetchTodolistsTC,
   removeTodolistAC,
   TodolistDomainType
 } from "./Bll/Reducers/todolistReducer";
-import {addTaskAC, changeTaskStatusAC, onChangeInputValueAC, removeTaskAC} from "./Bll/Reducers/taskReducer";
+import {addTaskAC, changeTaskStatusAC, onChangeInputValueAC, removeTaskTC} from "./Bll/Reducers/taskReducer";
 import {FilterValuesType, TaskType} from "./Api/todolist-api";
 import {useAppDispatch} from "./Bll/state/hooks";
 
@@ -41,7 +42,7 @@ function App() {
   },[dispatch])
 
   const removeTask = useCallback( (todoListId: string, taskId: string) => {
-    dispatch(removeTaskAC(todoListId, taskId))
+    dispatch(removeTaskTC(todoListId, taskId))
   }, [dispatch])
 
   const addTask = useCallback((todoListId: string, title: string) => {
