@@ -1,4 +1,4 @@
-import {FilterValuesType, TodolistType} from "../../Api/todolist-api";
+import {FilterValuesType, todolistAPI, TodolistType} from "../../Api/todolist-api";
 //TYPE
 export type SetTodolistsAT = ReturnType<typeof setTodolistsAC>
 export type RemoveTodolistAT = ReturnType<typeof removeTodolistAC>
@@ -67,3 +67,9 @@ export const changeTodolistFilterAC = (todoListId: string, newFilter: FilterValu
 } as const)
 
 //THUNK CREATOR
+
+export const fetchTodolistThunk = (dispatch: any) => {
+  todolistAPI.getTodolist().then(res => {
+    dispatch(setTodolistsAC(res.data))
+  })
+}

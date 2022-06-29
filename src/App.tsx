@@ -10,12 +10,12 @@ import {
   addTodolistAC,
   changeTodolistFilterAC,
   changeTodolistTitleAC,
+  fetchTodolistThunk,
   removeTodolistAC,
-  setTodolistsAC,
   TodolistDomainType
 } from "./Bll/Reducers/todolistReducer";
 import {addTaskAC, changeTaskStatusAC, onChangeInputValueAC, removeTaskAC} from "./Bll/Reducers/taskReducer";
-import {FilterValuesType, todolistAPI} from "./Api/todolist-api";
+import {FilterValuesType} from "./Api/todolist-api";
 
 export type TasksType = {
   [id: string]: Array<{
@@ -32,14 +32,12 @@ function MenuIcon() {
 function App() {
 
   useEffect(() => {
-    todolistAPI.getTodolist().then(res => {
-      dispatch(setTodolistsAC(res.data))
-    })
+      dispatch(fetchTodolistThunk)
   }, [])
 
   const todoList = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todoList)
   const tasks = useSelector<AppRootStateType, TasksType>(state => state.tasks)
-  const dispatch = useDispatch()
+  const dispatch: any = useDispatch()
 
   const addToDoList = useCallback ( (title: string) => {
     let toDiListID = v1();
