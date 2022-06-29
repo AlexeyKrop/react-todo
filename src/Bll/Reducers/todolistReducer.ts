@@ -1,6 +1,13 @@
 import {FilterValuesType, TodolistType} from "../../Api/todolist-api";
-
-
+//TYPE
+export type SetTodolistsAT = ReturnType<typeof setTodolistsAC>
+export type RemoveTodolistAT = ReturnType<typeof removeTodolistAC>
+export type AddTodolistAT = ReturnType<typeof addTodolistAC>
+export type ChangeTodolistTitleAT = ReturnType<typeof changeTodolistTitleAC>
+export type ChangeTodolistFilterAT = ReturnType<typeof changeTodolistFilterAC>
+export type TodolistDomainType = TodolistType & {
+  filter: FilterValuesType
+}
 export type todoListACType =
   | SetTodolistsAT
   | RemoveTodolistAT
@@ -9,11 +16,6 @@ export type todoListACType =
   | ChangeTodolistFilterAT
 
 const initialState: Array<TodolistDomainType> = []
-
-
-export type TodolistDomainType = TodolistType & {
-  filter: FilterValuesType
-}
 export const todolistReducer = (state: Array<TodolistDomainType> = initialState, action: todoListACType): Array<TodolistDomainType>  => {
   switch (action.type) {
     case "SET-TODOLISTS":
@@ -38,6 +40,7 @@ export const todolistReducer = (state: Array<TodolistDomainType> = initialState,
   }
 }
 
+//ACTION CREATOR
 export const setTodolistsAC = (todolists: Array<TodolistDomainType>) => ({type: 'SET-TODOLISTS', todolists: todolists} as const)
 
 export const removeTodolistAC = (todolistId: string) => ({
@@ -63,8 +66,4 @@ export const changeTodolistFilterAC = (todoListId: string, newFilter: FilterValu
   filter: newFilter
 } as const)
 
-export type SetTodolistsAT = ReturnType<typeof setTodolistsAC>
-export type RemoveTodolistAT = ReturnType<typeof removeTodolistAC>
-export type AddTodolistAT = ReturnType<typeof addTodolistAC>
-export type ChangeTodolistTitleAT = ReturnType<typeof changeTodolistTitleAC>
-export type ChangeTodolistFilterAT = ReturnType<typeof changeTodolistFilterAC>
+//THUNK CREATOR
