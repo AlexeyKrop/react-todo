@@ -39,8 +39,8 @@ function App() {
   }, [dispatch])
 
   const addToDoList = useCallback ( (title: string) => {
-    let toDiListID = v1();
-    dispatch(addTodolistAC(toDiListID, title))
+    // let toDiListID = v1();
+    dispatch(addTodolistAC(title))
   },[dispatch])
 
   const removeTask = useCallback( (todoListId: string, taskId: string) => {

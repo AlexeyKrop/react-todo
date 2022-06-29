@@ -1,5 +1,6 @@
 import {FilterValuesType, todolistAPI, TodolistType} from "../../Api/todolist-api";
 import {Dispatch} from "redux";
+import {v1} from "uuid";
 //TYPE
 export type SetTodolistsAT = ReturnType<typeof setTodolistsAC>
 export type RemoveTodolistAT = ReturnType<typeof removeTodolistAC>
@@ -50,9 +51,9 @@ export const removeTodolistAC = (todolistId: string) => ({
   todoListId: todolistId
 } as const)
 
-export const addTodolistAC = (todolistId: string, newTitle: string) => ({
+export const addTodolistAC = (newTitle: string) => ({
   type: 'ADD-TODOLIST',
-  todolistId: todolistId,
+  todolistId: v1(),
   title: newTitle
 } as const)
 
