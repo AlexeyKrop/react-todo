@@ -8,7 +8,7 @@ import {RootState} from "./Bll/state/store";
 import {
   addTodolistAC,
   changeTodolistFilterAC,
-  changeTodolistTitleAC, createTodolistTC,
+  changeTodolistTitleAC, changeTodolistTitleTC, createTodolistTC,
   fetchTodolistsTC,
   removeTodolistAC, removeTodolistTC,
   TodolistDomainType
@@ -66,7 +66,7 @@ function App() {
   },[dispatch])
 
   const onChangeTodoListTitle = useCallback((todoListId: string, changeValueToDoTitle: string) => {
-    dispatch(changeTodolistTitleAC(todoListId, changeValueToDoTitle))
+    dispatch(changeTodolistTitleTC(todoListId, changeValueToDoTitle))
   },[dispatch])
 
   return (
