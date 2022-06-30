@@ -17,8 +17,8 @@ export type todoListACType =
   | ChangeTodolistFilterAT
 
 const initialState: Array<TodolistDomainType> = []
+//REDUCER
 export const todolistReducer = (state: Array<TodolistDomainType> = initialState, action: todoListACType): Array<TodolistDomainType> => {
-
   switch (action.type) {
     case "SET-TODOLISTS":
       return action.todolists.map(t => ({...t, filter: "all"}))
