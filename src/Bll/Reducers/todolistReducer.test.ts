@@ -24,8 +24,8 @@ beforeEach(() => {
     }
   ]
 })
-test('check add Todolist', () => {
-  let endState = todolistReducer(startState , addTodolistAC('new todo'))
-  expect(endState.length).toBe(3)
-  expect(endState[0].title).toBe('new todo')
-})
+// test('check add Todolist', () => {
+//   let endState = todolistReducer(startState , addTodolistAC('new todo'))
+//   expect(endState.length).toBe(3)
+//   expect(endState[0].title).toBe('new todo')
+// })
