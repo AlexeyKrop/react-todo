@@ -5,7 +5,6 @@ import {TaskStatuses, TaskType, todolistAPI} from "../../Api/todolist-api";
 import {RootState} from "../state/store";
 
 
-
 const initialState: TasksType = {}
 
 export const taskReducer = (state: TasksType = initialState, action: TaskReducerType) => {
@@ -163,6 +162,25 @@ export const updateTaskStatusTC = (todolistId: string, taskId: string, status: T
         dispatch(changeTaskStatusAC(todolistId, taskId, status))
       })
 
+    }
+  }
+}
+export const updateTaskTitleTC = (todolistId: string, taskId: string, title: string) => {
+  return (dispatch: Dispatch, getState: () => RootState) => {
+    let task = getState().tasks[todolistId]
+    let currentTask = task.find(t => t.id === taskId)
+    if(currentTask){
+      todolistAPI.updateTask(todolistId, taskId, {
+        title: title,
+        description: currentTask.description,
+        status: currentTask.status,
+        priority: currentTask.priority,
+        startDate: currentTask.startDate,
+        deadline: currentTask.deadline,
+      })
+        .then(res => {
+          dispatch(changeTaskTitleAC(todolistId, taskId, title))
+        })
     }
   }
 }
