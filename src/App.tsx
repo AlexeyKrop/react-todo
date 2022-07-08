@@ -2,20 +2,21 @@ import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 import {AddItemForm} from "./Components/AddItemForm";
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
+import {AppBar, Button, Container, Grid, IconButton, LinearProgress, Paper, Toolbar, Typography} from "@mui/material";
 import {useSelector} from "react-redux";
 import {RootState} from "./Bll/state/store";
 import {
-  addTodolistAC,
   changeTodolistFilterAC,
-  changeTodolistTitleAC, changeTodolistTitleTC, createTodolistTC,
+  changeTodolistTitleTC,
+  createTodolistTC,
   fetchTodolistsTC,
-  removeTodolistAC, removeTodolistTC,
+  removeTodolistTC,
   TodolistDomainType
 } from "./Bll/Reducers/todolistReducer";
 import {addTaskTC, removeTaskTC, updateTaskStatusTC, updateTaskTitleTC} from "./Bll/Reducers/taskReducer";
 import {FilterValuesType, TaskStatuses, TaskType} from "./Api/todolist-api";
 import {useAppDispatch} from "./Bll/state/hooks";
+import {RequestStatusType} from "./Bll/Reducers/appReducer";
 
 export type TasksType = {
   [key: string]: Array<TaskType>
@@ -27,10 +28,9 @@ function MenuIcon() {
 }
 
 function App() {
-
-
   const todoList = useSelector<RootState, Array<TodolistDomainType>>(state => state.todoList)
   const tasks = useSelector<RootState, TasksType>(state => state.tasks)
+  const status = useSelector<RootState, RequestStatusType>((state)=> state.app.status)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -88,6 +88,7 @@ function App() {
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
+      <LinearProgress />
       <Container fixed>
         <Grid container>
           <AddItemForm addTask={addToDoList}/>
