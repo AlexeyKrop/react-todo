@@ -3,6 +3,7 @@ import {TasksType} from "../../App";
 import {Dispatch} from "redux";
 import {TaskStatuses, TaskType, todolistAPI} from "../../Api/todolist-api";
 import {AppRootStateType} from "../state/store";
+import {setAppStatusAC} from "./appReducer";
 
 
 const initialState: TasksType = {}
@@ -131,23 +132,28 @@ export const fetchTasksTC = (todolistId: string) => {
 }
 export const removeTaskTC = (todolistId: string, taskId: string) => {
   return (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC("loading"))
     todolistAPI.deleteTask(todolistId, taskId)
       .then(() => {
         dispatch(removeTaskAC(todolistId, taskId))
+        dispatch(setAppStatusAC("succeeded"))
       })
   }
 }
 export const addTaskTC = (todolistId: string, title: string) => {
   return (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC("loading"))
     todolistAPI.createTask(todolistId, title)
       .then(res => {
         dispatch(addTaskAC(res.data.data.item))
+        dispatch(setAppStatusAC("succeeded"))
       })
 
   }
 }
 export const updateTaskStatusTC = (todolistId: string, taskId: string, status: TaskStatuses) => {
   return (dispatch: Dispatch, getState: () => AppRootStateType) => {
+    dispatch(setAppStatusAC("loading"))
     let task = getState().tasks[todolistId]
     let currentTask = task.find(t => t.id === taskId)
     if(currentTask){
@@ -158,8 +164,10 @@ export const updateTaskStatusTC = (todolistId: string, taskId: string, status: T
         priority: currentTask.priority,
         startDate: currentTask.startDate,
         deadline: currentTask.deadline,
-      }).then(() => {
+      })
+        .then(() => {
         dispatch(changeTaskStatusAC(todolistId, taskId, status))
+          dispatch(setAppStatusAC("succeeded"))
       })
 
     }
@@ -167,6 +175,7 @@ export const updateTaskStatusTC = (todolistId: string, taskId: string, status: T
 }
 export const updateTaskTitleTC = (todolistId: string, taskId: string, title: string) => {
   return (dispatch: Dispatch, getState: () => AppRootStateType) => {
+    dispatch(setAppStatusAC("loading"))
     let task = getState().tasks[todolistId]
     let currentTask = task.find(t => t.id === taskId)
     if(currentTask){
@@ -180,6 +189,7 @@ export const updateTaskTitleTC = (todolistId: string, taskId: string, title: str
       })
         .then(() => {
           dispatch(changeTaskTitleAC(todolistId, taskId, title))
+          dispatch(setAppStatusAC("succeeded"))
         })
     }
   }

@@ -83,7 +83,7 @@ function App() {
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
-      {status === 'loading' && <LinearProgress/>}
+      {status === 'loading' && <LinearProgress sx={{position: 'absolute', width:'100%'}}/>}
       <Container fixed>
         <Grid container>
           <AddItemForm addTask={addToDoList}/>
