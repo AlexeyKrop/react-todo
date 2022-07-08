@@ -3,20 +3,16 @@ import './App.css';
 import {Todolist} from './Todolist';
 import {AddItemForm} from "./Components/AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, LinearProgress, Paper, Toolbar, Typography} from "@mui/material";
-import {useSelector} from "react-redux";
-import {RootState} from "./Bll/state/store";
 import {
   changeTodolistFilterAC,
   changeTodolistTitleTC,
   createTodolistTC,
   fetchTodolistsTC,
-  removeTodolistTC,
-  TodolistDomainType
+  removeTodolistTC
 } from "./Bll/Reducers/todolistReducer";
 import {addTaskTC, removeTaskTC, updateTaskStatusTC, updateTaskTitleTC} from "./Bll/Reducers/taskReducer";
 import {FilterValuesType, TaskStatuses, TaskType} from "./Api/todolist-api";
-import {useAppDispatch} from "./Bll/state/hooks";
-import {RequestStatusType} from "./Bll/Reducers/appReducer";
+import {useAppDispatch, useAppSelector} from "./Bll/state/hooks";
 
 export type TasksType = {
   [key: string]: Array<TaskType>
@@ -28,20 +24,20 @@ function MenuIcon() {
 }
 
 function App() {
-  const todoList = useSelector<RootState, Array<TodolistDomainType>>(state => state.todoList)
-  const tasks = useSelector<RootState, TasksType>(state => state.tasks)
-  const status = useSelector<RootState, RequestStatusType>((state)=> state.app.status)
+  const todoList = useAppSelector(state => state.todoList)
+  const tasks = useAppSelector(state => state.tasks)
+  const status = useAppSelector((state) => state.app.status)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(fetchTodolistsTC())
   }, [dispatch])
 
-  const addToDoList = useCallback ( (title: string) => {
+  const addToDoList = useCallback((title: string) => {
     dispatch(createTodolistTC(title))
-  },[dispatch])
+  }, [dispatch])
 
-  const removeTask = useCallback( (todoListId: string, taskId: string) => {
+  const removeTask = useCallback((todoListId: string, taskId: string) => {
     dispatch(removeTaskTC(todoListId, taskId))
   }, [dispatch])
 
@@ -51,23 +47,23 @@ function App() {
 
   const changeTaskStatus = useCallback((todoListId: string, taskId: string, status: TaskStatuses) => {
     dispatch(updateTaskStatusTC(todoListId, taskId, status))
-  },[dispatch])
+  }, [dispatch])
 
   const changeTodolistFilter = useCallback((todoListId: string, value: FilterValuesType) => {
     dispatch(changeTodolistFilterAC(todoListId, value))
-  },[dispatch])
+  }, [dispatch])
 
   const removeTodoList = useCallback((todoListId: string) => {
-   dispatch(removeTodolistTC(todoListId))
+    dispatch(removeTodolistTC(todoListId))
   }, [dispatch])
 
   const onChangeInputValue = useCallback((todoListId: string, taskId: string, inputValue: string) => {
     dispatch(updateTaskTitleTC(todoListId, taskId, inputValue))
-  },[dispatch])
+  }, [dispatch])
 
   const onChangeTodoListTitle = useCallback((todoListId: string, changeValueToDoTitle: string) => {
     dispatch(changeTodolistTitleTC(todoListId, changeValueToDoTitle))
-  },[dispatch])
+  }, [dispatch])
 
   return (
     <div className="App">
@@ -88,7 +84,8 @@ function App() {
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
-      <LinearProgress />
+      {status === 'loading' && <LinearProgress/>}
+
       <Container fixed>
         <Grid container>
           <AddItemForm addTask={addToDoList}/>

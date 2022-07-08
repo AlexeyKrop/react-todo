@@ -2,7 +2,7 @@ import {AddTodolistAT, RemoveTodolistAT, SetTodolistsAT} from "./todolistReducer
 import {TasksType} from "../../App";
 import {Dispatch} from "redux";
 import {TaskStatuses, TaskType, todolistAPI} from "../../Api/todolist-api";
-import {RootState} from "../state/store";
+import {AppRootStateType} from "../state/store";
 
 
 const initialState: TasksType = {}
@@ -132,7 +132,7 @@ export const fetchTasksTC = (todolistId: string) => {
 export const removeTaskTC = (todolistId: string, taskId: string) => {
   return (dispatch: Dispatch) => {
     todolistAPI.deleteTask(todolistId, taskId)
-      .then(res => {
+      .then(() => {
         dispatch(removeTaskAC(todolistId, taskId))
       })
   }
@@ -147,7 +147,7 @@ export const addTaskTC = (todolistId: string, title: string) => {
   }
 }
 export const updateTaskStatusTC = (todolistId: string, taskId: string, status: TaskStatuses) => {
-  return (dispatch: Dispatch, getState: () => RootState) => {
+  return (dispatch: Dispatch, getState: () => AppRootStateType) => {
     let task = getState().tasks[todolistId]
     let currentTask = task.find(t => t.id === taskId)
     if(currentTask){
@@ -158,7 +158,7 @@ export const updateTaskStatusTC = (todolistId: string, taskId: string, status: T
         priority: currentTask.priority,
         startDate: currentTask.startDate,
         deadline: currentTask.deadline,
-      }).then(res => {
+      }).then(() => {
         dispatch(changeTaskStatusAC(todolistId, taskId, status))
       })
 
@@ -166,7 +166,7 @@ export const updateTaskStatusTC = (todolistId: string, taskId: string, status: T
   }
 }
 export const updateTaskTitleTC = (todolistId: string, taskId: string, title: string) => {
-  return (dispatch: Dispatch, getState: () => RootState) => {
+  return (dispatch: Dispatch, getState: () => AppRootStateType) => {
     let task = getState().tasks[todolistId]
     let currentTask = task.find(t => t.id === taskId)
     if(currentTask){
@@ -178,7 +178,7 @@ export const updateTaskTitleTC = (todolistId: string, taskId: string, title: str
         startDate: currentTask.startDate,
         deadline: currentTask.deadline,
       })
-        .then(res => {
+        .then(() => {
           dispatch(changeTaskTitleAC(todolistId, taskId, title))
         })
     }
