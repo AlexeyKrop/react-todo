@@ -1,5 +1,6 @@
 import {FilterValuesType, todolistAPI, TodolistType} from "../../Api/todolist-api";
 import {Dispatch} from "redux";
+import {setAppStatusAC} from "./appReducer";
 //TYPE
 export type SetTodolistsAT = ReturnType<typeof setTodolistsAC>
 export type RemoveTodolistAT = ReturnType<typeof removeTodolistAC>
@@ -67,9 +68,11 @@ export const changeTodolistFilterAC = (todoListId: string, newFilter: FilterValu
 //THUNK CREATOR
 export const fetchTodolistsTC = () => {
   return (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC('loading'))
     todolistAPI.getTodolist()
       .then(res => {
         dispatch(setTodolistsAC(res.data))
+        dispatch(setAppStatusAC("succeeded"))
       })
   }
 }
@@ -84,7 +87,7 @@ export const createTodolistTC = (title: string) => {
 export const removeTodolistTC = (todolistId: string) => {
   return (dispatch: Dispatch) => {
     todolistAPI.deleteTodolist(todolistId)
-      .then(res => {
+      .then(() => {
         dispatch(removeTodolistAC(todolistId))
       })
   }
@@ -92,7 +95,7 @@ export const removeTodolistTC = (todolistId: string) => {
 export const changeTodolistTitleTC = (todolistId: string, title: string) => {
   return (dispatch: Dispatch) => {
     todolistAPI.updateTodolist(todolistId, title)
-      .then(res => {
+      .then(() => {
         dispatch(changeTodolistTitleAC(todolistId, title))
       })
   }

@@ -1,4 +1,4 @@
-import {addTodolistAC, TodolistDomainType, todolistReducer} from "./todolistReducer";
+import {TodolistDomainType} from "./todolistReducer";
 import {v1} from "uuid";
 
 let startState: Array<TodolistDomainType> = []

@@ -64,7 +64,6 @@ function App() {
   const onChangeTodoListTitle = useCallback((todoListId: string, changeValueToDoTitle: string) => {
     dispatch(changeTodolistTitleTC(todoListId, changeValueToDoTitle))
   }, [dispatch])
-
   return (
     <div className="App">
       <AppBar position="static">
@@ -85,7 +84,6 @@ function App() {
         </Toolbar>
       </AppBar>
       {status === 'loading' && <LinearProgress/>}
-
       <Container fixed>
         <Grid container>
           <AddItemForm addTask={addToDoList}/>
