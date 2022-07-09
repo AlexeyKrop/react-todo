@@ -2,11 +2,10 @@ import Button from "@mui/material/Button/Button";
 import Icon from "@mui/material/Icon/Icon";
 import Input from "@mui/material/Input/Input";
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {RequestStatusType} from "../Bll/Reducers/appReducer";
 
 type AddItemFormType = {
   addTask: (title: string) => void
-  entityStatus?: RequestStatusType
+  disabled?: boolean
 }
 
 export const AddItemForm = React.memo((props: AddItemFormType) => {
@@ -42,7 +41,7 @@ export const AddItemForm = React.memo((props: AddItemFormType) => {
              onKeyPress={onKeyPressHandler}
              error={!!error}
       />
-      <Button disabled={props.entityStatus === "loading"} variant="text" size="large" onClick={addTask}>
+      <Button disabled={props.disabled} variant="text" size="large" onClick={addTask}>
         <Icon sx={{fontSize: 30}}>add_circle</Icon></Button>
       {error && <div className="error-message">{error}</div>}
     </div>
