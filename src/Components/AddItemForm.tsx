@@ -1,21 +1,25 @@
+import Button from "@mui/material/Button/Button";
+import Icon from "@mui/material/Icon/Icon";
+import Input from "@mui/material/Input/Input";
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {Button, Icon, Input} from "@mui/material";
+import {RequestStatusType} from "../Bll/Reducers/appReducer";
 
 type AddItemFormType = {
   addTask: (title: string) => void
+  entityStatus?: RequestStatusType
 }
 
 export const AddItemForm = React.memo((props: AddItemFormType) => {
   let [title, setTitle] = useState("")
   let [error, setError] = useState<string | null>(null)
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    if(error){
+    if (error) {
       setError(null);
     }
     setTitle(e.currentTarget.value)
   }
   const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    if(error){
+    if (error) {
       setError(null);
     }
     if (e.key === 'Enter' && title.trim() !== "") {
@@ -38,8 +42,8 @@ export const AddItemForm = React.memo((props: AddItemFormType) => {
              onKeyPress={onKeyPressHandler}
              error={!!error}
       />
-      <Button variant="text" size="large" onClick={addTask}>
-        <Icon sx={{ fontSize: 30 }}>add_circle</Icon></Button>
+      <Button disabled={props.entityStatus === "loading"} variant="text" size="large" onClick={addTask}>
+        <Icon sx={{fontSize: 30}}>add_circle</Icon></Button>
       {error && <div className="error-message">{error}</div>}
     </div>
   )

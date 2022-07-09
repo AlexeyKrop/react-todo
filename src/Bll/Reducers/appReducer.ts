@@ -12,7 +12,6 @@ export const appReducer = (state: InitialStateType = initialState, action: AppRe
     case 'APP/SET-STATUS':
       return {...state, status: action.status}
     case "APP/SET-ERROR":
-
       return {
         ...state,
         error: action.error
