@@ -13,6 +13,7 @@ import {
 import {addTaskTC, removeTaskTC, updateTaskStatusTC, updateTaskTitleTC} from "./Bll/Reducers/taskReducer";
 import {FilterValuesType, TaskStatuses, TaskType} from "./Api/todolist-api";
 import {useAppDispatch, useAppSelector} from "./Bll/state/hooks";
+import {ErrorSnackbar} from "./Components/ErrorSnackBar/ErrorSnackBar";
 
 export type TasksType = {
   [key: string]: Array<TaskType>
@@ -113,6 +114,7 @@ function App() {
           })}
         </Grid>
       </Container>
+      <ErrorSnackbar/>
     </div>
   );
 }
