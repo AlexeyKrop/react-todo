@@ -1,6 +1,8 @@
 import {FilterValuesType, todolistAPI, TodolistType} from "../../Api/todolist-api";
 import {Dispatch} from "redux";
 import {RequestStatusType, setAppErrorAC, setAppStatusAC} from "./appReducer";
+import {AxiosError} from "axios";
+import {handleServerNetworkError} from "../../utils/error-utils";
 
 const initialState: Array<TodolistDomainType> = []
 //REDUCER
@@ -48,7 +50,11 @@ export const changeTodolistFilterAC = (todoListId: string, newFilter: FilterValu
   todoListId: todoListId,
   filter: newFilter
 } as const)
-export const changeTodolistEntityStatusAC  = (todoListId: string, entityStatus: RequestStatusType) => ({type: 'CHANGE-TODOLIST_ENTITY-STATUS', todoListId, entityStatus} as const)
+export const changeTodolistEntityStatusAC = (todoListId: string, entityStatus: RequestStatusType) => ({
+  type: 'CHANGE-TODOLIST_ENTITY-STATUS',
+  todoListId,
+  entityStatus
+} as const)
 
 //THUNK CREATOR
 export const fetchTodolistsTC = () => {
@@ -58,6 +64,9 @@ export const fetchTodolistsTC = () => {
       .then(res => {
         dispatch(setTodolistsAC(res.data))
         dispatch(setAppStatusAC("succeeded"))
+      })
+      .catch((error: AxiosError) => {
+        handleServerNetworkError(dispatch, error.message, 'failed')
       })
   }
 }
@@ -79,6 +88,9 @@ export const createTodolistTC = (title: string) => {
         }
 
       })
+      .catch((error: AxiosError) => {
+        handleServerNetworkError(dispatch, error.message, 'failed')
+      })
   }
 }
 export const removeTodolistTC = (todolistId: string) => {
@@ -87,10 +99,10 @@ export const removeTodolistTC = (todolistId: string) => {
     dispatch(changeTodolistEntityStatusAC(todolistId, "loading"))
     todolistAPI.deleteTodolist(todolistId)
       .then((res) => {
-        if(res.data.resultCode === 0){
+        if (res.data.resultCode === 0) {
           dispatch(removeTodolistAC(todolistId))
           dispatch(setAppStatusAC("succeeded"))
-        }else {
+        } else {
           if (res.data.messages.length) {
             dispatch(setAppErrorAC(res.data.messages[0]))
           } else {
@@ -98,6 +110,9 @@ export const removeTodolistTC = (todolistId: string) => {
           }
           dispatch(setAppStatusAC('failed'))
         }
+      })
+      .catch((error: AxiosError) => {
+        handleServerNetworkError(dispatch, error.message, 'failed')
       })
   }
 }
@@ -108,6 +123,9 @@ export const changeTodolistTitleTC = (todolistId: string, title: string) => {
       .then(() => {
         dispatch(changeTodolistTitleAC(todolistId, title))
         dispatch(setAppStatusAC("succeeded"))
+      })
+      .catch((error: AxiosError) => {
+        handleServerNetworkError(dispatch, error.message, 'failed')
       })
   }
 
