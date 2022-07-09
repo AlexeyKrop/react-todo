@@ -3,7 +3,7 @@ import {TasksType} from "../../App";
 import {Dispatch} from "redux";
 import {TaskStatuses, TaskType, todolistAPI} from "../../Api/todolist-api";
 import {AppRootStateType} from "../state/store";
-import {setAppStatusAC} from "./appReducer";
+import {setAppErrorAC, setAppStatusAC} from "./appReducer";
 
 
 const initialState: TasksType = {}
@@ -62,24 +62,6 @@ export const taskReducer = (state: TasksType = initialState, action: TaskReducer
   }
 }
 
-
-//ACTION TYPE
-export type SetTaskAT = ReturnType<typeof setTasksAC>
-export type RemoveTaskAT = ReturnType<typeof removeTaskAC>
-export type AddTaskAT = ReturnType<typeof addTaskAC>
-export type ChangeStatusAT = ReturnType<typeof changeTaskStatusAC>
-export type ChangeTaskTitleAT = ReturnType<typeof changeTaskTitleAC>
-export type OnChangeInputValueAT = ReturnType<typeof onChangeInputValueAC>
-type TaskReducerType =
-  | SetTodolistsAT
-  | RemoveTaskAT
-  | AddTaskAT
-  | ChangeStatusAT
-  | ChangeTaskTitleAT
-  | AddTodolistAT
-  | RemoveTodolistAT
-  | OnChangeInputValueAT
-  | SetTaskAT
 
 //ACTION CREATOR
 export const setTasksAC = (todolistId: string, tasks: Array<TaskType>,) => ({type: 'SET-TASKS', todolistId: todolistId, tasks: tasks} as const)
@@ -145,8 +127,19 @@ export const addTaskTC = (todolistId: string, title: string) => {
     dispatch(setAppStatusAC("loading"))
     todolistAPI.createTask(todolistId, title)
       .then(res => {
-        dispatch(addTaskAC(res.data.data.item))
-        dispatch(setAppStatusAC("succeeded"))
+        if(res.data.resultCode === 0){
+          dispatch(addTaskAC(res.data.data.item))
+          dispatch(setAppStatusAC("succeeded"))
+        }else {
+          if (res.data.messages.length) {
+            dispatch(setAppErrorAC(res.data.messages[0]))
+          } else {
+            dispatch(setAppErrorAC('Some error occurred'))
+          }
+          dispatch(setAppStatusAC('failed'))
+        }
+
+
       })
 
   }
@@ -194,4 +187,22 @@ export const updateTaskTitleTC = (todolistId: string, taskId: string, title: str
     }
   }
 }
+
+//ACTION TYPE
+export type SetTaskAT = ReturnType<typeof setTasksAC>
+export type RemoveTaskAT = ReturnType<typeof removeTaskAC>
+export type AddTaskAT = ReturnType<typeof addTaskAC>
+export type ChangeStatusAT = ReturnType<typeof changeTaskStatusAC>
+export type ChangeTaskTitleAT = ReturnType<typeof changeTaskTitleAC>
+export type OnChangeInputValueAT = ReturnType<typeof onChangeInputValueAC>
+type TaskReducerType =
+  | SetTodolistsAT
+  | RemoveTaskAT
+  | AddTaskAT
+  | ChangeStatusAT
+  | ChangeTaskTitleAT
+  | AddTodolistAT
+  | RemoveTodolistAT
+  | OnChangeInputValueAT
+  | SetTaskAT
 

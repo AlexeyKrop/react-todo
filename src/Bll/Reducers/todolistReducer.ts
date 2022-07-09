@@ -1,21 +1,6 @@
 import {FilterValuesType, todolistAPI, TodolistType} from "../../Api/todolist-api";
 import {Dispatch} from "redux";
-import {setAppStatusAC} from "./appReducer";
-//TYPE
-export type SetTodolistsAT = ReturnType<typeof setTodolistsAC>
-export type RemoveTodolistAT = ReturnType<typeof removeTodolistAC>
-export type AddTodolistAT = ReturnType<typeof addTodolistAC>
-export type ChangeTodolistTitleAT = ReturnType<typeof changeTodolistTitleAC>
-export type ChangeTodolistFilterAT = ReturnType<typeof changeTodolistFilterAC>
-export type TodolistDomainType = TodolistType & {
-  filter: FilterValuesType
-}
-export type todoListACType =
-  | SetTodolistsAT
-  | RemoveTodolistAT
-  | AddTodolistAT
-  | ChangeTodolistTitleAT
-  | ChangeTodolistFilterAT
+import {RequestStatusType, setAppErrorAC, setAppStatusAC} from "./appReducer";
 
 const initialState: Array<TodolistDomainType> = []
 //REDUCER
@@ -26,7 +11,7 @@ export const todolistReducer = (state: Array<TodolistDomainType> = initialState,
     case 'REMOVE-TODOLIST':
       return state.filter(t => t.id !== action.todoListId)
     case 'ADD-TODOLIST':
-      return [{...action.todolist, filter: "all"}, ...state]
+      return [{...action.todolist, filter: "all", entityStatus: "idle"}, ...state]
     case 'CHANGE-TODOLIST_TITLE':
       return state.map(t => t.id === action.todoListId ? {...t, title: action.changeValueToDoTitle} : t)
     case 'CHANGE-TODOLIST_FILTER':
@@ -77,8 +62,18 @@ export const createTodolistTC = (title: string) => {
     dispatch(setAppStatusAC("loading"))
     todolistAPI.createTodolist(title)
       .then(res => {
-        dispatch(addTodolistAC(res.data.data.item))
-        dispatch(setAppStatusAC("succeeded"))
+        if (res.data.resultCode === 0) {
+          dispatch(addTodolistAC(res.data.data.item))
+          dispatch(setAppStatusAC("succeeded"))
+        } else {
+          if (res.data.messages.length) {
+            dispatch(setAppErrorAC(res.data.messages[0]))
+          } else {
+            dispatch(setAppErrorAC('Some error occurred'))
+          }
+          dispatch(setAppStatusAC('failed'))
+        }
+
       })
   }
 }
@@ -103,3 +98,20 @@ export const changeTodolistTitleTC = (todolistId: string, title: string) => {
   }
 
 }
+
+//TYPE
+export type SetTodolistsAT = ReturnType<typeof setTodolistsAC>
+export type RemoveTodolistAT = ReturnType<typeof removeTodolistAC>
+export type AddTodolistAT = ReturnType<typeof addTodolistAC>
+export type ChangeTodolistTitleAT = ReturnType<typeof changeTodolistTitleAC>
+export type ChangeTodolistFilterAT = ReturnType<typeof changeTodolistFilterAC>
+export type TodolistDomainType = TodolistType & {
+  filter: FilterValuesType
+  entityStatus: RequestStatusType
+}
+export type todoListACType =
+  | SetTodolistsAT
+  | RemoveTodolistAT
+  | AddTodolistAT
+  | ChangeTodolistTitleAT
+  | ChangeTodolistFilterAT

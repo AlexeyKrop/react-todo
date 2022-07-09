@@ -2,7 +2,6 @@ import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 import {AddItemForm} from "./Components/AddItemForm";
-import {AppBar, Button, Container, Grid, IconButton, LinearProgress, Paper, Toolbar, Typography} from "@mui/material";
 import {
   changeTodolistFilterAC,
   changeTodolistTitleTC,
@@ -14,15 +13,22 @@ import {addTaskTC, removeTaskTC, updateTaskStatusTC, updateTaskTitleTC} from "./
 import {FilterValuesType, TaskStatuses, TaskType} from "./Api/todolist-api";
 import {useAppDispatch, useAppSelector} from "./Bll/state/hooks";
 import {ErrorSnackbar} from "./Components/ErrorSnackBar/ErrorSnackBar";
+import AppBar from '@mui/material/AppBar/AppBar';
+import Toolbar from '@mui/material/Toolbar/Toolbar';
+import IconButton from '@mui/material/IconButton/IconButton';
+import Typography from '@mui/material/Typography/Typography';
+import Button from '@mui/material/Button/Button';
+import LinearProgress from '@mui/material/LinearProgress/LinearProgress';
+import Container from '@mui/material/Container/Container';
+import Grid from '@mui/material/Grid/Grid';
+import Paper from '@mui/material/Paper/Paper';
 
 export type TasksType = {
   [key: string]: Array<TaskType>
 }
 
 
-function MenuIcon() {
-  return null;
-}
+
 
 function App() {
   const todoList = useAppSelector(state => state.todoList)
@@ -76,7 +82,6 @@ function App() {
             aria-label="menu"
             sx={{mr: 2}}
           >
-            <MenuIcon/>
           </IconButton>
           <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
             News
@@ -84,7 +89,7 @@ function App() {
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
-      {status === 'loading' && <LinearProgress sx={{position: 'absolute', width:'100%'}}/>}
+      {status === 'loading' && <LinearProgress sx={{position: 'absolute', width: '100%'}}/>}
       <Container fixed>
         <Grid container>
           <AddItemForm addTask={addToDoList}/>
@@ -98,13 +103,14 @@ function App() {
                   <Todolist todoListId={t.id}
                             key={t.id}
                             title={t.title}
+                            filter={t.filter}
+                            entityStatus={t.entityStatus}
                             tasks={tasks[t.id]}
                             removeTask={removeTask}
                             changeFilter={changeTodolistFilter}
                             addTask={addTask}
                             changeTaskStatus={changeTaskStatus}
                             removeTodoList={removeTodoList}
-                            filter={t.filter}
                             onChangeInputValue={onChangeInputValue}
                             onChangeTodoListTitle={onChangeTodoListTitle}
                   />
