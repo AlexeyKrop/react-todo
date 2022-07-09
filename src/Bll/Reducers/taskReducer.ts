@@ -112,7 +112,6 @@ export const fetchTasksTC = (todolistId: string) => {
   return (dispatch: Dispatch) => {
     dispatch(setAppStatusAC("loading"))
     todolistAPI.getTask(todolistId)
-
       .then(res => {
         dispatch(setTasksAC(todolistId, res.data.items))
         dispatch(setAppStatusAC("succeeded"))
