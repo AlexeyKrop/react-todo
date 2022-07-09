@@ -5,7 +5,7 @@ import {TaskStatuses, TaskType, todolistAPI} from "../../Api/todolist-api";
 import {AppRootStateType} from "../state/store";
 import {setAppErrorAC, setAppStatusAC} from "./appReducer";
 import {AxiosError} from "axios";
-import {handleServerNetworkError} from "../../utils/error-utils";
+import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
 
 
@@ -130,12 +130,7 @@ export const removeTaskTC = (todolistId: string, taskId: string) => {
           dispatch(removeTaskAC(todolistId, taskId))
           dispatch(setAppStatusAC("succeeded"))
         }else {
-          if (res.data.messages.length) {
-            dispatch(setAppErrorAC(res.data.messages[0]))
-          } else {
-            dispatch(setAppErrorAC('Some error occurred'))
-          }
-          dispatch(setAppStatusAC('failed'))
+          handleServerAppError(dispatch, res.data)
         }
 
 
@@ -154,12 +149,7 @@ export const addTaskTC = (todolistId: string, title: string) => {
           dispatch(addTaskAC(res.data.data.item))
           dispatch(setAppStatusAC("succeeded"))
         }else {
-          if (res.data.messages.length) {
-            dispatch(setAppErrorAC(res.data.messages[0]))
-          } else {
-            dispatch(setAppErrorAC('Some error occurred'))
-          }
-          dispatch(setAppStatusAC('failed'))
+          handleServerAppError(dispatch, res.data)
         }
 
 
