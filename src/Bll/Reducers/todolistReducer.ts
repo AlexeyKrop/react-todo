@@ -16,6 +16,9 @@ export const todolistReducer = (state: Array<TodolistDomainType> = initialState,
       return state.map(t => t.id === action.todoListId ? {...t, title: action.changeValueToDoTitle} : t)
     case 'CHANGE-TODOLIST_FILTER':
       return state.map(t => t.id === action.todoListId ? {...t, filter: action.filter} : t)
+    case "CHANGE-TODOLIST_ENTITY-STATUS":
+      return state.map(tl => tl.id === action.todoListId ? {...tl, entityStatus: action.entityStatus} : tl)
+
     default:
       return state
   }
@@ -45,6 +48,7 @@ export const changeTodolistFilterAC = (todoListId: string, newFilter: FilterValu
   todoListId: todoListId,
   filter: newFilter
 } as const)
+export const changeTodolistEntityStatusAC  = (todoListId: string, entityStatus: RequestStatusType) => ({type: 'CHANGE-TODOLIST_ENTITY-STATUS', todoListId, entityStatus} as const)
 
 //THUNK CREATOR
 export const fetchTodolistsTC = () => {
@@ -80,6 +84,7 @@ export const createTodolistTC = (title: string) => {
 export const removeTodolistTC = (todolistId: string) => {
   return (dispatch: Dispatch) => {
     dispatch(setAppStatusAC("loading"))
+    dispatch(changeTodolistEntityStatusAC(todolistId, "loading"))
     todolistAPI.deleteTodolist(todolistId)
       .then(() => {
         dispatch(removeTodolistAC(todolistId))
@@ -105,6 +110,7 @@ export type RemoveTodolistAT = ReturnType<typeof removeTodolistAC>
 export type AddTodolistAT = ReturnType<typeof addTodolistAC>
 export type ChangeTodolistTitleAT = ReturnType<typeof changeTodolistTitleAC>
 export type ChangeTodolistFilterAT = ReturnType<typeof changeTodolistFilterAC>
+export type ChangeTodolistEntityStatusAT = ReturnType<typeof changeTodolistEntityStatusAC>
 export type TodolistDomainType = TodolistType & {
   filter: FilterValuesType
   entityStatus: RequestStatusType
@@ -115,3 +121,4 @@ export type todoListACType =
   | AddTodolistAT
   | ChangeTodolistTitleAT
   | ChangeTodolistFilterAT
+  | ChangeTodolistEntityStatusAT

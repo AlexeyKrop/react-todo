@@ -68,7 +68,7 @@ export const Todolist = React.memo((props: PropsType) => {
   return <div>
     <h3>
       <EditableSpan callBack={onChangeInputValue} title={props.title}/>
-      <IconButton onClick={() => onClickRemoveTodoListHandler(props.todoListId)} disabled={props.entityStatus !== "loading"} aria-label="delete" size="large">
+      <IconButton onClick={() => onClickRemoveTodoListHandler(props.todoListId)} disabled={props.entityStatus === "loading"} aria-label="delete" size="large">
         <Delete/>
       </IconButton>
     </h3>
