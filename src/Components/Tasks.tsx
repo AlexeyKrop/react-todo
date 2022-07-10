@@ -6,6 +6,7 @@ import {TaskStatuses, TaskType} from "../Api/todolist-api";
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from "@mui/material/IconButton/IconButton";
 import { Delete } from '@mui/icons-material';
+import {RequestStatusType} from "../Bll/Reducers/appReducer";
 
 
 type TaskPropsType = {
@@ -14,6 +15,7 @@ type TaskPropsType = {
   onChangeInputValue: (todoListId: string, taskId: string, changeInputValue: string) => void
   todoListId: string
   task: TaskType
+  entityStatus: RequestStatusType
 }
 const Tasks = React.memo((props: TaskPropsType) => {
   const onClickHandler = useCallback(() => props.removeTask(props.todoListId, props.task.id),[props])
@@ -28,7 +30,7 @@ const Tasks = React.memo((props: TaskPropsType) => {
 
   return <div className={props.task.status === TaskStatuses.Completed ? "is-done" : ""}>
     <Checkbox onChange={onChangeHandler} checked={props.task.status === TaskStatuses.Completed}/>
-  <EditableSpan callBack={onChangeInputValue} title={props.task.title}/>
+  <EditableSpan disabled={props.entityStatus === "loading"} callBack={onChangeInputValue} title={props.task.title}/>
   <IconButton onClick={onClickHandler} aria-label="delete" size="large">
     <Delete/>
   </IconButton>

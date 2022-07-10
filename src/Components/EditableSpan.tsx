@@ -7,13 +7,16 @@ import {Input} from "@mui/material";
 type EditableSpanType = {
   callBack: (value: string) => void
   title: string
+  disabled?: boolean
 }
 
 export const EditableSpan = React.memo((props: EditableSpanType) => {
+
   let [editMode, setEditMode] = useState(false)
   let [inputValue, setInputValue] = useState(props.title)
+
   const onClickDoubleHandler = () => {
-    setEditMode(!editMode)
+    !props.disabled && setEditMode(!editMode)
   }
   const changeTaskValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.currentTarget.value)
