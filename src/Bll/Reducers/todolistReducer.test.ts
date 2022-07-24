@@ -1,4 +1,4 @@
-import {addTodolistAC, TodolistDomainType, todolistReducer} from "./todolistReducer";
+import {addTodolistAC, setTodolistsAC, SetTodolistsAT, TodolistDomainType, todolistReducer} from "./todolistReducer";
 import {v1} from "uuid";
 
 let startState: Array<TodolistDomainType> = []
@@ -28,4 +28,9 @@ test('check add Todolist', () => {
   let endState = todolistReducer(startState , addTodolistAC(newTodo))
   expect(endState.length).toBe(2)
   expect(endState[0].title).toBe('new todo')
+})
+test('check fetch todolist', () => {
+  let endState = todolistReducer(startState , setTodolistsAC(startState))
+  expect(endState.length).toBe(1)
+  expect(endState[0].title).toBe('What to Learn')
 })
