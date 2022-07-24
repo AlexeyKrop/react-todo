@@ -1,5 +1,5 @@
 import {
-  addTodolistAC,
+  addTodolistAC, changeTodolistFilterAC,
   changeTodolistTitleAC,
   removeTodolistAC,
   setTodolistsAC,
@@ -49,4 +49,8 @@ test('check remove todolist', () => {
 test('check change todolist title', () => {
   let endState = todolistReducer(startState , changeTodolistTitleAC(todolistID_1, 'React'))
   expect(endState[0].title).toBe('React')
+})
+test('change todolist filter', () => {
+  let endState = todolistReducer(startState , changeTodolistFilterAC(todolistID_1, 'active'))
+  expect(endState[0].filter).toBe('active')
 })
