@@ -1,4 +1,11 @@
-import {addTodolistAC, removeTodolistAC, setTodolistsAC, TodolistDomainType, todolistReducer} from "./todolistReducer";
+import {
+  addTodolistAC,
+  changeTodolistTitleAC,
+  removeTodolistAC,
+  setTodolistsAC,
+  TodolistDomainType,
+  todolistReducer
+} from "./todolistReducer";
 import {v1} from "uuid";
 
 let startState: Array<TodolistDomainType> = []
@@ -38,4 +45,8 @@ test('check remove todolist', () => {
   let endState = todolistReducer(startState , removeTodolistAC(todolistID_1))
   expect(endState.length).toBe(0)
   expect(endState[0]).toBeUndefined()
+})
+test('check change todolist title', () => {
+  let endState = todolistReducer(startState , changeTodolistTitleAC(todolistID_1, 'React'))
+  expect(endState[0].title).toBe('React')
 })
