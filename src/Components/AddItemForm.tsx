@@ -1,7 +1,8 @@
 import Button from "@mui/material/Button/Button";
 import Icon from "@mui/material/Icon/Icon";
-import Input from "@mui/material/Input/Input";
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import TextField from '@mui/material/TextField';
+
 
 type AddItemFormType = {
   addTask: (title: string) => void
@@ -36,14 +37,16 @@ export const AddItemForm = React.memo((props: AddItemFormType) => {
   }
   return (
     <div>
-      <Input value={title}
-             onChange={onChangeHandler}
-             onKeyPress={onKeyPressHandler}
-             error={!!error}
+      <TextField
+        variant="standard"
+        value={title}
+        onChange={onChangeHandler}
+        onKeyPress={onKeyPressHandler}
+        error={!!error}
+        helperText={!!error && "Incorrect entry."}
       />
       <Button disabled={props.disabled} variant="text" size="large" onClick={addTask}>
         <Icon sx={{fontSize: 30}}>add_circle</Icon></Button>
-      {error && <div className="error-message">{error}</div>}
     </div>
   )
 })
