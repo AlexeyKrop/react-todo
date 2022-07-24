@@ -62,7 +62,6 @@ export const fetchTodolistsTC = () => {
     dispatch(setAppStatusAC('loading'))
     todolistAPI.getTodolist()
       .then(res => {
-        console.log(res)
         dispatch(setTodolistsAC(res.data))
         dispatch(setAppStatusAC("succeeded"))
       })
@@ -112,8 +111,8 @@ export const changeTodolistTitleTC = (todolistId: string, title: string) => {
     dispatch(setAppStatusAC("loading"))
     todolistAPI.updateTodolist(todolistId, title)
       .then(() => {
-          dispatch(changeTodolistTitleAC(todolistId, title))
-          dispatch(setAppStatusAC("succeeded"))
+        dispatch(changeTodolistTitleAC(todolistId, title))
+        dispatch(setAppStatusAC("succeeded"))
       })
       .catch((error: AxiosError) => {
         handleServerNetworkError(dispatch, error.message, 'failed')
