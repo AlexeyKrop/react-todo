@@ -1,7 +1,7 @@
 import {TasksType} from "../../App";
 import {v1} from "uuid";
 import {TaskPriorities, TaskStatuses} from "../../Api/todolist-api";
-import {removeTaskAC, taskReducer} from "./taskReducer";
+import {addTaskAC, removeTaskAC, taskReducer} from "./taskReducer";
 
 let startState: TasksType = {}
 let todolistID_1: string
@@ -28,7 +28,7 @@ beforeEach(() => {
       },
       {
         description: 'string',
-        title: 'JS',
+        title: 'React',
         completed: true,
         status: TaskStatuses.New,
         priority: TaskPriorities.Low,
@@ -61,4 +61,21 @@ test('check remove task', () => {
       }
     ],
   })
+})
+test('check add task', () => {
+  let newTask = {
+    description: 'string',
+    title: 'Redux',
+    completed: true,
+    status: TaskStatuses.New,
+    priority: TaskPriorities.Low,
+    startDate: 'string',
+    deadline: 'string',
+    id: '3',
+    todoListId: 'todoListId1',
+    order: -1,
+    addedDate: 'string',
+  }
+  let endState = taskReducer(startState, addTaskAC(newTask))
+  expect(endState!['todoListId1'].length).toBe(3)
 })
