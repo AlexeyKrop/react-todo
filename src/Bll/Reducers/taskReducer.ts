@@ -3,14 +3,18 @@ import {TasksType} from "../../App";
 import {Dispatch} from "redux";
 import {TaskStatuses, TaskType, todolistAPI} from "../../Api/todolist-api";
 import {AppRootStateType} from "../state/store";
-import {setAppStatusAC} from "./appReducer";
+import {RequestStatusType, setAppStatusAC} from "./appReducer";
 import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
 
-const initialState: TasksType = {}
+const initialState = {} as TasksDomainType
+export type TasksDomainType = TasksType & {
+  entityStatus: RequestStatusType
+}
+type InitialStateType = typeof initialState
 
-export const taskReducer = (state: TasksType = initialState, action: TaskReducerType) => {
+export const taskReducer = (state: InitialStateType = initialState, action: TaskReducerType) => {
   switch (action.type) {
     case "SET-TODOLISTS":
         const stateCopy = {...state}
@@ -59,6 +63,12 @@ export const taskReducer = (state: TasksType = initialState, action: TaskReducer
           title: action.changeInputValue
         } : t)
       }
+    case "CHANGE-TASKS_ENTITY-STATUS":
+      debugger
+      return{
+        ...state,
+        [action.todoListId]: state[action.todoListId].map(t => t.id === action.taskId ? {...t,entityStatus: action.entityStatus } : t)
+      }
     default:
       return state
   }
@@ -98,6 +108,12 @@ export const onChangeInputValueAC = (todoListId: string, taskId: string | number
     changeInputValue: changeInputValue,
   } as const
 }
+export const changeTasksEntityStatusAC = (todoListId: string, taskId: string,  entityStatus: RequestStatusType) => ({
+  type: 'CHANGE-TASKS_ENTITY-STATUS',
+  todoListId,
+  taskId,
+  entityStatus
+} as const)
 
 //THUNK
 export const fetchTasksTC = (todolistId: string) => {
@@ -116,6 +132,7 @@ export const fetchTasksTC = (todolistId: string) => {
 export const removeTaskTC = (todolistId: string, taskId: string) => {
   return (dispatch: Dispatch) => {
     dispatch(setAppStatusAC("loading"))
+    dispatch(changeTasksEntityStatusAC(todolistId, taskId,  "loading"))
     todolistAPI.deleteTask(todolistId, taskId)
       .then(res => {
         if(res.data.resultCode === 0){
@@ -209,6 +226,7 @@ export type AddTaskAT = ReturnType<typeof addTaskAC>
 export type ChangeStatusAT = ReturnType<typeof changeTaskStatusAC>
 export type ChangeTaskTitleAT = ReturnType<typeof changeTaskTitleAC>
 export type OnChangeInputValueAT = ReturnType<typeof onChangeInputValueAC>
+export type OnChangeTasksEntityStatusAT = ReturnType<typeof changeTasksEntityStatusAC>
 type TaskReducerType =
   | SetTodolistsAT
   | RemoveTaskAT
@@ -219,4 +237,5 @@ type TaskReducerType =
   | RemoveTodolistAT
   | OnChangeInputValueAT
   | SetTaskAT
+  | OnChangeTasksEntityStatusAT
 

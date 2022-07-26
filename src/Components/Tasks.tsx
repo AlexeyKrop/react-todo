@@ -19,7 +19,6 @@ type TaskPropsType = {
 }
 const Tasks = React.memo((props: TaskPropsType) => {
   const onClickHandler = useCallback(() => props.removeTask(props.todoListId, props.task.id),[props])
-
   const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     props.changeTaskStatus(props.todoListId, props.task.id, e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New);
   },[ props])
@@ -31,7 +30,7 @@ const Tasks = React.memo((props: TaskPropsType) => {
   return <div className={props.task.status === TaskStatuses.Completed ? "is-done" : ""}>
     <Checkbox onChange={onChangeHandler} checked={props.task.status === TaskStatuses.Completed}/>
   <EditableSpan disabled={props.entityStatus === "loading"} callBack={onChangeInputValue} title={props.task.title}/>
-  <IconButton onClick={onClickHandler} aria-label="delete" size="large">
+  <IconButton  onClick={onClickHandler} aria-label="delete" size="large">
     <Delete/>
   </IconButton>
 </div>

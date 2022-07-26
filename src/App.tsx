@@ -35,7 +35,6 @@ function App() {
   const tasks = useAppSelector(state => state.tasks)
   const status = useAppSelector((state) => state.app.status)
   const dispatch = useAppDispatch()
-
   useEffect(() => {
     dispatch(fetchTodolistsTC())
   }, [dispatch])

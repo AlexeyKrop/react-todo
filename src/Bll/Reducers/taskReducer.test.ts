@@ -1,9 +1,8 @@
-import {TasksType} from "../../App";
 import {v1} from "uuid";
 import {TaskPriorities, TaskStatuses} from "../../Api/todolist-api";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, taskReducer} from "./taskReducer";
 
-let startState: TasksType = {}
+let startState: any = {}
 let todolistID_1: string
 let todolistID_2: string
 let taskID_1: string
@@ -39,7 +38,7 @@ beforeEach(() => {
         order: -1,
         addedDate: 'string',
       }
-    ]
+    ],
   }
 })
 test('check remove task', () => {
