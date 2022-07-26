@@ -64,7 +64,6 @@ export const taskReducer = (state: InitialStateType = initialState, action: Task
         } : t)
       }
     case "CHANGE-TASKS_ENTITY-STATUS":
-      debugger
       return{
         ...state,
         [action.todoListId]: state[action.todoListId].map(t => t.id === action.taskId ? {...t,entityStatus: action.entityStatus } : t)
