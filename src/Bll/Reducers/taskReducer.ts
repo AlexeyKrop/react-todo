@@ -3,11 +3,9 @@ import {TasksType} from "../../App";
 import {Dispatch} from "redux";
 import {TaskStatuses, TaskType, todolistAPI} from "../../Api/todolist-api";
 import {AppRootStateType} from "../state/store";
-import {setAppErrorAC, setAppStatusAC} from "./appReducer";
+import {setAppStatusAC} from "./appReducer";
 import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
-
-
 
 
 const initialState: TasksType = {}
@@ -68,14 +66,8 @@ export const taskReducer = (state: TasksType = initialState, action: TaskReducer
 
 
 //ACTION CREATOR
-export const setTasksAC = (todolistId: string, tasks: Array<TaskType>,) => ({type: 'SET-TASKS', todolistId: todolistId, tasks: tasks} as const)
-export const removeTaskAC = (todoListId: string, taskId: string | number) => {
-  return {
-    type: 'REMOVE-TASK',
-    todoListId: todoListId,
-    taskId: taskId
-  } as const
-}
+export const setTasksAC = (todolistId: string, tasks: Array<TaskType>,) => ({type: 'SET-TASKS', todolistId, tasks} as const)
+export const removeTaskAC = (todoListId: string, taskId: string | number) => ({type: 'REMOVE-TASK',  todoListId, taskId} as const)
 export const addTaskAC = (task: TaskType) => {
   return {
     type: 'ADD-TASK',
