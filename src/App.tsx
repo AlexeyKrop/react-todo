@@ -28,12 +28,10 @@ export type TasksType = {
 }
 
 
-
-
 function App() {
   const todoList = useAppSelector(state => state.todoList)
   const tasks = useAppSelector(state => state.tasks)
-  const status = useAppSelector((state) => state.app.status)
+  const status = useAppSelector(state => state.app.status)
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(fetchTodolistsTC())
