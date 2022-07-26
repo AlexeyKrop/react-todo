@@ -1,7 +1,7 @@
 import {TasksType} from "../../App";
 import {v1} from "uuid";
 import {TaskPriorities, TaskStatuses} from "../../Api/todolist-api";
-import {addTaskAC, changeTaskTitleAC, removeTaskAC, taskReducer} from "./taskReducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, taskReducer} from "./taskReducer";
 
 let startState: TasksType = {}
 let todolistID_1: string
@@ -82,4 +82,8 @@ test('check add task', () => {
 test('check task title', () => {
   let endState = taskReducer(startState, changeTaskTitleAC('todoListId1','1', 'Angular'))
   expect(endState!['todoListId1'][0].title).toBe('Angular')
+})
+test('check task status', () => {
+  let endState = taskReducer(startState, changeTaskStatusAC('todoListId1','1', TaskStatuses.InProgress,))
+  expect(endState!['todoListId1'][0].status).toBe(1)
 })
