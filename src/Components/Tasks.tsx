@@ -2,12 +2,11 @@ import React, {ChangeEvent, useCallback} from 'react';
 import {EditableSpan} from "./EditableSpan";
 
 
-import {TaskStatuses, TaskType} from "../Api/todolist-api";
+import {TaskStatuses} from "../Api/todolist-api";
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from "@mui/material/IconButton/IconButton";
 import {Delete} from '@mui/icons-material';
 import {RequestStatusType} from "../Bll/Reducers/appReducer";
-import {TasksDomainType} from "../Bll/Reducers/taskReducer";
 
 
 type TaskPropsType = {
@@ -19,7 +18,6 @@ type TaskPropsType = {
   entityStatus: RequestStatusType
 }
 const Tasks = React.memo((props: TaskPropsType) => {
-  console.log(props.task)
   const onClickHandler = useCallback(() => props.removeTask(props.todoListId, props.task.id),[props])
   const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     props.changeTaskStatus(props.todoListId, props.task.id, e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New);
