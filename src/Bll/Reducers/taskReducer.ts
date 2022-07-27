@@ -24,14 +24,16 @@ export const taskReducer = (state: InitialStateType = initialState, action: Task
         stateCopy[t.id] = []
       })
       return stateCopy
-    // case "SET-TASKS": {
-    //   return {...state, [action.todolistId]: action.tasks}
+    // case "SET-TASKS": return {
+    //   ...state, [action.todolistId]: action.tasks.map(t => {
+    //     return {...t, isDisabled: false}
+    //   })
     // }
-    case "SET-TASKS": return {
-      ...state, [action.todolistId]: action.tasks.map(t => {
-        return {...t, isDisabled: false}
-      })
-    }
+    case "SET-TASKS":
+      return {
+        ...state,
+        [action.todolistId]: action.tasks.map(t => ({...t, isDisabled: false}))
+      }
     case 'REMOVE-TASK':
       return {...state, [action.todoListId]: state[action.todoListId].filter(t => t.id !== action.taskId)}
     case 'ADD-TASK':
