@@ -23,11 +23,6 @@ import Container from '@mui/material/Container/Container';
 import Grid from '@mui/material/Grid/Grid';
 import Paper from '@mui/material/Paper/Paper';
 
-export type TasksType = {
-  [key: string]: Array<TaskType>
-}
-
-
 function App() {
   const todoList = useAppSelector(state => state.todoList)
   const tasks = useAppSelector(state => state.tasks)

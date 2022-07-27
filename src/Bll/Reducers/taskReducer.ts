@@ -1,16 +1,18 @@
 import {AddTodolistAT, RemoveTodolistAT, SetTodolistsAT} from "./todolistReducer";
-import {TasksType} from "../../App";
 import {Dispatch} from "redux";
 import {TaskStatuses, TaskType, todolistAPI} from "../../Api/todolist-api";
 import {AppRootStateType} from "../state/store";
-import {RequestStatusType, setAppStatusAC} from "./appReducer";
+import {setAppStatusAC} from "./appReducer";
 import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
 
 const initialState = {} as TasksDomainType
+export type TasksType = {
+  [key: string]: Array<TaskType>
+}
 export type TasksDomainType = TasksType & {
-  entityStatus: RequestStatusType
+  isDisabled: boolean
 }
 type InitialStateType = typeof initialState
 
@@ -23,6 +25,7 @@ export const taskReducer = (state: InitialStateType = initialState, action: Task
       })
       return stateCopy
     case "SET-TASKS": {
+      console.log(action.tasks)
       return {...state, [action.todolistId]: action.tasks}
     }
     case 'REMOVE-TASK':
@@ -63,12 +66,12 @@ export const taskReducer = (state: InitialStateType = initialState, action: Task
           title: action.changeInputValue
         } : t)
       }
-    case "CHANGE-TASKS_ENTITY-STATUS":
+    case "TASKS/IS-DISABLED":
       return {
         ...state,
         [action.todoListId]: state[action.todoListId].map(t => t.id === action.taskId ? {
           ...t,
-          entityStatus: action.entityStatus
+          isDisabled: action.isDisabled
         } : t)
       }
     default:
@@ -118,11 +121,11 @@ export const onChangeInputValueAC = (todoListId: string, taskId: string | number
     changeInputValue: changeInputValue,
   } as const
 }
-export const changeTasksEntityStatusAC = (todoListId: string, taskId: string, entityStatus: RequestStatusType) => ({
-  type: 'CHANGE-TASKS_ENTITY-STATUS',
+export const changeTasksDisabledStatusAC = (todoListId: string, taskId: string, isDisabled: boolean) => ({
+  type: 'TASKS/IS-DISABLED',
   todoListId,
   taskId,
-  entityStatus
+  isDisabled
 } as const)
 
 //THUNK
@@ -142,7 +145,7 @@ export const fetchTasksTC = (todolistId: string) => {
 export const removeTaskTC = (todolistId: string, taskId: string) => {
   return (dispatch: Dispatch) => {
     dispatch(setAppStatusAC("loading"))
-    dispatch(changeTasksEntityStatusAC(todolistId, taskId, "loading"))
+    dispatch(changeTasksDisabledStatusAC(todolistId, taskId, true))
     todolistAPI.deleteTask(todolistId, taskId)
       .then(res => {
         if (res.data.resultCode === 0) {
@@ -236,7 +239,7 @@ export type AddTaskAT = ReturnType<typeof addTaskAC>
 export type ChangeStatusAT = ReturnType<typeof changeTaskStatusAC>
 export type ChangeTaskTitleAT = ReturnType<typeof changeTaskTitleAC>
 export type OnChangeInputValueAT = ReturnType<typeof onChangeInputValueAC>
-export type OnChangeTasksEntityStatusAT = ReturnType<typeof changeTasksEntityStatusAC>
+export type OnChangeTasksDisabledStatusAT = ReturnType<typeof changeTasksDisabledStatusAC>
 type TaskReducerType =
   | SetTodolistsAT
   | RemoveTaskAT
@@ -247,5 +250,5 @@ type TaskReducerType =
   | RemoveTodolistAT
   | OnChangeInputValueAT
   | SetTaskAT
-  | OnChangeTasksEntityStatusAT
+  | OnChangeTasksDisabledStatusAT
 
