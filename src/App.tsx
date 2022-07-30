@@ -8,9 +8,10 @@ import IconButton from '@mui/material/IconButton/IconButton';
 import Typography from '@mui/material/Typography/Typography';
 import Button from '@mui/material/Button/Button';
 import LinearProgress from '@mui/material/LinearProgress/LinearProgress';
-import Container from '@mui/material/Container/Container';
 import Login from "./Components/Login/Login";
 import {TodolistsList} from "./TodolistsList";
+import {Route, Routes} from 'react-router-dom';
+
 
 const App = () => {
   const status = useAppSelector(state => state.app.status)
@@ -33,11 +34,12 @@ const App = () => {
         </Toolbar>
       </AppBar>
       {status === 'loading' && <LinearProgress sx={{position: 'absolute', width: '100%'}}/>}
-      <Container fixed>
-        <TodolistsList/>
-      </Container>
+        <Routes>
+          <Route path="/" element={<TodolistsList/>}/>
+          <Route path="/login" element={<Login/>}/>
+        </Routes>
+
       <ErrorSnackbar/>
-      <Login/>
     </div>
   );
 };

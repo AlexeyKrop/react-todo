@@ -11,7 +11,8 @@ import {FilterValuesType, TaskStatuses} from "./Api/todolist-api";
 import Grid from "@mui/material/Grid/Grid";
 import {AddItemForm} from "./Components/AddItemForm";
 import Paper from "@mui/material/Paper/Paper";
-import {Todolist} from "./Todolist";
+import {Todolist} from "./Components/Todolist";
+import Container from "@mui/material/Container/Container";
 
 export const TodolistsList = () => {
   const todoList = useAppSelector(state => state.todoList)
@@ -54,6 +55,7 @@ export const TodolistsList = () => {
   }, [dispatch])
   return (
     <>
+      <Container fixed>
       <Grid container>
         <AddItemForm addTask={addToDoList}/>
       </Grid>
@@ -82,6 +84,7 @@ export const TodolistsList = () => {
           )
         })}
       </Grid>
+      </Container>
     </>
   )
 }

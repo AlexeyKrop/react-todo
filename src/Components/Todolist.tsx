@@ -1,13 +1,13 @@
 import React, {useCallback, useEffect} from 'react';
-import {AddItemForm} from "./Components/AddItemForm";
-import {EditableSpan} from "./Components/EditableSpan";
+import {AddItemForm} from "./AddItemForm";
+import {EditableSpan} from "./EditableSpan";
 
-import Tasks from "./Components/Tasks";
+import Tasks from "./Tasks";
 
-import {FilterValuesType, TaskStatuses, TaskType} from "./Api/todolist-api";
-import {useAppDispatch} from "./Bll/state/hooks";
-import {fetchTasksTC} from "./Bll/Reducers/taskReducer";
-import {RequestStatusType} from "./Bll/Reducers/appReducer";
+import {FilterValuesType, TaskStatuses, TaskType} from "../Api/todolist-api";
+import {useAppDispatch} from "../Bll/state/hooks";
+import {fetchTasksTC} from "../Bll/Reducers/taskReducer";
+import {RequestStatusType} from "../Bll/Reducers/appReducer";
 import IconButton from '@mui/material/IconButton/IconButton';
 import {Delete} from '@mui/icons-material';
 import Button from '@mui/material/Button/Button';
