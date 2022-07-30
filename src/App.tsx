@@ -10,7 +10,7 @@ import {
   removeTodolistTC
 } from "./Bll/Reducers/todolistReducer";
 import {addTaskTC, removeTaskTC, updateTaskStatusTC, updateTaskTitleTC} from "./Bll/Reducers/taskReducer";
-import {FilterValuesType, TaskStatuses, TaskType} from "./Api/todolist-api";
+import {FilterValuesType, TaskStatuses} from "./Api/todolist-api";
 import {useAppDispatch, useAppSelector} from "./Bll/state/hooks";
 import {ErrorSnackbar} from "./Components/ErrorSnackBar/ErrorSnackBar";
 import AppBar from '@mui/material/AppBar/AppBar';
@@ -22,8 +22,9 @@ import LinearProgress from '@mui/material/LinearProgress/LinearProgress';
 import Container from '@mui/material/Container/Container';
 import Grid from '@mui/material/Grid/Grid';
 import Paper from '@mui/material/Paper/Paper';
+import Login from "./Components/Login/Login";
 
-function App() {
+const App = () => {
   const todoList = useAppSelector(state => state.todoList)
   const tasks = useAppSelector(state => state.tasks)
   const status = useAppSelector(state => state.app.status)
@@ -113,8 +114,9 @@ function App() {
         </Grid>
       </Container>
       <ErrorSnackbar/>
+      <Login />
     </div>
   );
-}
+};
 
 export default App;
