@@ -8,10 +8,13 @@ import Button from '@mui/material/Button/Button';
 import Grid from '@mui/material/Grid/Grid';
 import {Box} from "@mui/material";
 import {loginTC} from "../../Bll/Reducers/authReducer";
-import {useAppDispatch} from "../../Bll/state/hooks";
+import {useAppDispatch, useAppSelector} from "../../Bll/state/hooks";
+import {Navigate} from 'react-router-dom';
 
 const Login = () => {
+  const isLogin = useAppSelector(state => state.auth.isLogin)
   const dispatch = useAppDispatch()
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -22,8 +25,13 @@ const Login = () => {
       dispatch(loginTC(values));
     },
   });
+
+  if (isLogin) {
+    return <Navigate to="/react-todo"/>
+  }
   return (
     <>
+
       <Box sx={{flexGrow: 1}}>
         <Grid container justifyContent="center" marginTop='100px'>
           <Grid item xs={4}>

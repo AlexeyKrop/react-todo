@@ -6,16 +6,17 @@ import {AxiosError} from "axios";
 
 
 const initialState = {
-  isAuth: false
+  isLogin: false
 }
 
 //REDUCER
 export const authReducer = (state: InitialStateType = initialState, action: authACType): InitialStateType => {
   switch (action.type) {
     case "AUTH/SET-AUTH":
+      debugger
       return {
         ...state,
-        isAuth: action.value
+        isLogin: action.value
       }
     default:
       return state
@@ -31,7 +32,6 @@ export const loginTC = (params: AuthParamsType) => (dispatch: Dispatch) => {
   dispatch(setAppStatusAC("loading"))
   authAPI.login(params)
     .then(res => {
-      console.log(res.data)
       if (res.data.resultCode === 0) {
         dispatch(setAppStatusAC("succeeded"))
         dispatch(setAuthAC(true))
