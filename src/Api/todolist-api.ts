@@ -36,7 +36,14 @@ export const todolistAPI = {
     return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
   }
 }
-
+export const authAPI = {
+  login(authParams: AuthParamsType){
+    return instance.post<{ authParams: AuthParamsType }, AxiosResponse<ResponseType<{ userId?: number }>>>(`/auth/login`, {authParams})
+  },
+  logout(){
+    return instance.delete(`/auth/login`)
+  }
+}
 
 
 
@@ -72,7 +79,20 @@ export type GetTasksResponse = {
   totalCount: number
   items: Array<TaskType>
 }
-
+export type UpdateTaskModelType = {
+  title: string
+  description: string
+  status: TaskStatuses
+  priority: TaskPriorities
+  startDate: string
+  deadline: string
+}
+export type AuthParamsType = {
+  email: string,
+  password: string
+  rememberMe?: boolean
+  captcha?: string
+}
 
 export enum TaskStatuses {
   New = 0,
@@ -87,13 +107,6 @@ export enum TaskPriorities {
   Urgently = 3,
   Later = 4
 }
-export type UpdateTaskModelType = {
-  title: string
-  description: string
-  status: TaskStatuses
-  priority: TaskPriorities
-  startDate: string
-  deadline: string
-}
+
 
 
