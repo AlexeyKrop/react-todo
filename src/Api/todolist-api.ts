@@ -38,7 +38,7 @@ export const todolistAPI = {
 }
 export const authAPI = {
   login(authParams: AuthParamsType){
-    return instance.post<{ authParams: AuthParamsType }, AxiosResponse<ResponseType<{ userId?: number }>>>(`/auth/login`, {authParams})
+    return instance.post<AuthParamsType, AxiosResponse<ResponseType<{ userId?: number }>>>(`/auth/login`, authParams)
   },
   logout(){
     return instance.delete<ResponseType>(`/auth/login`)

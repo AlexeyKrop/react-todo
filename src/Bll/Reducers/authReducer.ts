@@ -1,9 +1,8 @@
 import {Dispatch} from "redux";
 import {setAppStatusAC} from "./appReducer";
-import {authAPI, AuthParamsType, todolistAPI} from "../../Api/todolist-api";
+import {authAPI, AuthParamsType} from "../../Api/todolist-api";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 import {AxiosError} from "axios";
-import {changeTasksDisabledStatusAC, removeTaskAC} from "./taskReducer";
 
 
 const initialState = {
@@ -32,6 +31,7 @@ export const loginTC = (params: AuthParamsType) => (dispatch: Dispatch) => {
   dispatch(setAppStatusAC("loading"))
   authAPI.login(params)
     .then(res => {
+      console.log(res.data)
       if (res.data.resultCode === 0) {
         dispatch(setAppStatusAC("succeeded"))
         dispatch(setAuthAC(true))

@@ -7,8 +7,11 @@ import Checkbox from '@mui/material/Checkbox/Checkbox';
 import Button from '@mui/material/Button/Button';
 import Grid from '@mui/material/Grid/Grid';
 import {Box} from "@mui/material";
+import {loginTC} from "../../Bll/Reducers/authReducer";
+import {useAppDispatch} from "../../Bll/state/hooks";
 
 const Login = () => {
+  const dispatch = useAppDispatch()
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -16,7 +19,7 @@ const Login = () => {
       rememberMe: false
     },
     onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
+      dispatch(loginTC(values));
     },
   });
   return (
@@ -27,7 +30,6 @@ const Login = () => {
             <form onSubmit={formik.handleSubmit}>
               <FormGroup>
                 <FormikProvider value={formik}>
-                  <label htmlFor="email">Email Address</label>
                   <TextField
                     {...formik.getFieldProps('email')}
                     id="email"
@@ -43,7 +45,6 @@ const Login = () => {
                   <Button type="submit" variant="contained">Submit</Button>
                 </FormikProvider>
               </FormGroup>
-
             </form>
           </Grid>
         </Grid>
