@@ -30,7 +30,6 @@ const Login = () => {
   }
   return (
     <>
-
       <Box sx={{flexGrow: 1}}>
         <Grid container justifyContent="center" marginTop='100px'>
           <Grid item xs={4}>
@@ -56,8 +55,6 @@ const Login = () => {
           </Grid>
         </Grid>
       </Box>
-
-
     </>
 
 
