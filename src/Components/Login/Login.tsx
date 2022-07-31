@@ -30,9 +30,12 @@ const Login = () => {
   }
   return (
     <>
-      <Box sx={{flexGrow: 1}}>
-        <Grid container justifyContent="center" marginTop='100px'>
-          <Grid item xs={4}>
+      <Box sx={{flexGrow: 1}} >
+        <Grid container justifyContent="center" alignItems="center" marginTop='100px'  >
+          <Grid  sx={{
+            width: 300,
+            height: 300,
+          }}>
             <form onSubmit={formik.handleSubmit}>
               <FormGroup>
                 <FormikProvider value={formik}>
