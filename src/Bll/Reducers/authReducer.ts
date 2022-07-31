@@ -12,8 +12,7 @@ const initialState = {
 //REDUCER
 export const authReducer = (state: InitialStateType = initialState, action: authACType): InitialStateType => {
   switch (action.type) {
-    case "AUTH/SET-AUTH":
-      debugger
+    case "AUTH/SET-IS-LOGGED-IN":
       return {
         ...state,
         isLogin: action.value
@@ -24,7 +23,7 @@ export const authReducer = (state: InitialStateType = initialState, action: auth
 }
 
 //ACTION CREATOR
-export const setAuthAC = (value: boolean) => ({type: 'AUTH/SET-AUTH', value} as const)
+export const setIsLoggedInAC = (value: boolean) => ({type: 'AUTH/SET-IS-LOGGED-IN', value} as const)
 
 
 //THUNK CREATOR
@@ -33,8 +32,9 @@ export const loginTC = (params: AuthParamsType) => (dispatch: Dispatch) => {
   authAPI.login(params)
     .then(res => {
       if (res.data.resultCode === 0) {
+        dispatch(setIsLoggedInAC(true))
         dispatch(setAppStatusAC("succeeded"))
-        dispatch(setAuthAC(true))
+
       } else {
         handleServerAppError(dispatch, res.data)
       }
@@ -49,7 +49,7 @@ export const logoutTC = () => (dispatch: Dispatch) => {
     .then(res => {
       if (res.data.resultCode === 0) {
         dispatch(setAppStatusAC("succeeded"))
-        dispatch(setAuthAC(false))
+        dispatch(setIsLoggedInAC(false))
       } else {
         handleServerAppError(dispatch, res.data)
       }
@@ -60,7 +60,9 @@ export const logoutTC = () => (dispatch: Dispatch) => {
 }
 
 //TYPE
-export type InitialStateType = typeof initialState
-export type SetAuthAT = ReturnType<typeof setAuthAC>
+export type InitialStateType = {
+  isLogin: boolean
+}
+export type SetAuthAT = ReturnType<typeof setIsLoggedInAC>
 export type authACType =
   | SetAuthAT

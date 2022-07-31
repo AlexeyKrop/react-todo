@@ -2,7 +2,8 @@ import {Dispatch} from "redux"
 import {authAPI} from "../../Api/todolist-api";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 import {AxiosError} from "axios";
-import {setAuthAC} from "./authReducer";
+import {setIsLoggedInAC} from "./authReducer";
+
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -42,10 +43,11 @@ export const appInitialTC = () => (dispatch: Dispatch) => {
   authAPI.me()
     .then(res => {
       if (res.data.resultCode === 0) {
-        dispatch(setAppInitialAC(true))
+        dispatch(setIsLoggedInAC(true))
       } else {
         handleServerAppError(dispatch, res.data)
       }
+      dispatch(setAppInitialAC(true))
     })
     .catch((error: AxiosError) => {
       handleServerNetworkError(dispatch, error.message, 'failed')

@@ -10,9 +10,10 @@ import Button from '@mui/material/Button/Button';
 import LinearProgress from '@mui/material/LinearProgress/LinearProgress';
 import Login from "./Components/Login/Login";
 import {TodolistsList} from "./TodolistsList";
-import {Navigate, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import {logoutTC} from "./Bll/Reducers/authReducer";
 import {appInitialTC} from "./Bll/Reducers/appReducer";
+import {CircularProgress} from "@mui/material";
 
 
 const App = () => {
@@ -27,7 +28,9 @@ const App = () => {
   const onClickLogOut = () => {
     dispatch(logoutTC())
   }
-
+if(!initialized){
+  return <CircularProgress />
+}
   return (
     <div className="App">
       <AppBar position="static">

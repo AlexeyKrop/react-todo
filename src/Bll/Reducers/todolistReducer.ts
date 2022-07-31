@@ -63,10 +63,13 @@ export const fetchTodolistsTC = () => {
     todolistAPI.getTodolist()
       .then(res => {
         dispatch(setTodolistsAC(res.data))
-        dispatch(setAppStatusAC("succeeded"))
+
       })
       .catch((error: AxiosError) => {
         handleServerNetworkError(dispatch, error.message, 'failed')
+      })
+      .finally(() => {
+        dispatch(setAppStatusAC("succeeded"))
       })
   }
 }

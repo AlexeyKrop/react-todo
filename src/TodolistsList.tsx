@@ -13,12 +13,17 @@ import {AddItemForm} from "./Components/AddItemForm";
 import Paper from "@mui/material/Paper/Paper";
 import {Todolist} from "./Components/Todolist";
 import Container from "@mui/material/Container/Container";
+import {Navigate} from "react-router-dom";
 
 export const TodolistsList = () => {
   const todoList = useAppSelector(state => state.todoList)
   const tasks = useAppSelector(state => state.tasks)
+  const isLogin = useAppSelector(state => state.auth.isLogin)
   const dispatch = useAppDispatch()
   useEffect(() => {
+    if(!isLogin){
+      return
+    }
     dispatch(fetchTodolistsTC())
   }, [dispatch])
 
@@ -53,6 +58,9 @@ export const TodolistsList = () => {
   const onChangeTodoListTitle = useCallback((todoListId: string, changeValueToDoTitle: string) => {
     dispatch(changeTodolistTitleTC(todoListId, changeValueToDoTitle))
   }, [dispatch])
+  if(!isLogin){
+    return  <Navigate to="/login"/>
+  }
   return (
     <>
       <Container fixed>
