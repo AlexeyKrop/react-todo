@@ -10,14 +10,14 @@ import Login from "./Components/Login/Login";
 import {TodolistsList} from "./TodolistsList";
 import {Route, Routes} from 'react-router-dom';
 import {logoutTC} from "./Bll/Reducers/authReducer";
-import {appInitialTC} from "./Bll/Reducers/appReducer";
+import {appInitialTC, selectApp} from "./Bll/Reducers/appReducer";
 import {CircularProgress} from "@mui/material";
 import LogoutIcon from '@mui/icons-material/Logout';
 
 const App = () => {
-  const status = useAppSelector(state => state.app.status)
-  const initialized = useAppSelector(state => state.app.initialized)
-
+  // const status = useAppSelector(state => state.app.status)
+  // const initialized = useAppSelector(state => state.app.initialized)
+  const {status, initialized} = useAppSelector(selectApp)
   const dispatch = useAppDispatch()
 
   useEffect(() => {

@@ -3,6 +3,7 @@ import {authAPI} from "../../Api/todolist-api";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 import {AxiosError} from "axios";
 import {setIsLoggedInAC} from "./authReducer";
+import {AppRootStateType} from "../state/store";
 
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
@@ -59,3 +60,6 @@ type SetAppStatusAT = ReturnType<typeof setAppStatusAC>
 type SetAppErrorAT = ReturnType<typeof setAppErrorAC>
 type SetAppInitialAT = ReturnType<typeof setAppInitialAC>
 type AppReducerType = SetAppStatusAT | SetAppErrorAT | SetAppInitialAT
+
+//Select
+export const selectApp = (state: AppRootStateType) => state.app
