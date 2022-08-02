@@ -11,8 +11,8 @@ import {TodolistsList} from "./TodolistsList";
 import {Route, Routes} from 'react-router-dom';
 import {logoutTC} from "./Bll/Reducers/authReducer";
 import {appInitialTC, selectApp} from "./Bll/Reducers/appReducer";
-import {CircularProgress} from "@mui/material";
 import LogoutIcon from '@mui/icons-material/Logout';
+import {SimpleBackdrop} from "./Components/Backdrop/Backdrop";
 
 const App = () => {
   // const status = useAppSelector(state => state.app.status)
@@ -27,15 +27,17 @@ const App = () => {
     dispatch(logoutTC())
   }
 if(!initialized){
-  return <CircularProgress />
+  return <SimpleBackdrop/>
 }
   return (
     <div className="App">
+
       <AppBar position="static">
         <Toolbar>
           <Button onClick={onClickLogOut} startIcon={<LogoutIcon />}  variant="text" color="inherit" >Log out</Button>
         </Toolbar>
       </AppBar>
+      <SimpleBackdrop />
       {status === 'loading' && <LinearProgress sx={{position: 'absolute', width: '100%'}}/>}
       <Routes>
         <Route path="/react-todo" element={<TodolistsList/>}/>
