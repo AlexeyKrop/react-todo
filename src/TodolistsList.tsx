@@ -63,13 +63,10 @@ export const TodolistsList = () => {
     return <Navigate to="/login"/>
   }
   return (
-    <>
-
       <Container fixed>
         <Grid container>
           <AddItemForm addTask={addToDoList}/>
         </Grid>
-
         <Grid container direction="row"
               alignItems="flex-start">
           {todoList.map(t => {
@@ -96,6 +93,5 @@ export const TodolistsList = () => {
           })}
         </Grid>
       </Container>
-    </>
   )
 }
