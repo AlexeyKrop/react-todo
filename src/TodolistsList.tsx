@@ -1,7 +1,8 @@
 import {useAppDispatch, useAppSelector} from "./Bll/state/hooks";
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect} from "react";
 import {
-  changeTodolistFilterAC, changeTodolistTitleTC,
+  changeTodolistFilterAC,
+  changeTodolistTitleTC,
   createTodolistTC,
   fetchTodolistsTC,
   removeTodolistTC
@@ -14,19 +15,14 @@ import Paper from "@mui/material/Paper/Paper";
 import {Todolist} from "./Components/Todolist";
 import Container from "@mui/material/Container/Container";
 import {Navigate} from "react-router-dom";
-import {Variants} from "./Components/Skeleton/Skeleton";
-import {selectApp} from "./Bll/Reducers/appReducer";
 
 export const TodolistsList = () => {
   const todoList = useAppSelector(state => state.todoList)
   const tasks = useAppSelector(state => state.tasks)
   const isLogin = useAppSelector(state => state.auth.isLogin)
   const dispatch = useAppDispatch()
-  const {status, initialized} = useAppSelector(selectApp)
-  let [value, setValue] = useState(false)
-  console.log(status)
   useEffect(() => {
-    if(!isLogin){
+    if (!isLogin) {
       return
     }
     dispatch(fetchTodolistsTC())
@@ -63,42 +59,42 @@ export const TodolistsList = () => {
   const onChangeTodoListTitle = useCallback((todoListId: string, changeValueToDoTitle: string) => {
     dispatch(changeTodolistTitleTC(todoListId, changeValueToDoTitle))
   }, [dispatch])
-  if(!isLogin){
-    return  <Navigate to="/login"/>
+  if (!isLogin) {
+    return <Navigate to="/login"/>
   }
   return (
     <>
 
       <Container fixed>
-      <Grid container>
-        <AddItemForm addTask={addToDoList}/>
-      </Grid>
+        <Grid container>
+          <AddItemForm addTask={addToDoList}/>
+        </Grid>
 
-      <Grid container direction="row"
-            alignItems="flex-start">
-        {todoList.map(t => {
-          return (
-            <Grid style={{padding: '20px 0'}} key={t.id}>
-              <Paper style={{padding: '20px', marginRight: '10px'}}>
-                { value ? <Variants /> :  <Todolist todoListId={t.id}
-                          key={t.id}
-                          title={t.title}
-                          filter={t.filter}
-                          entityStatus={t.entityStatus}
-                          tasks={tasks[t.id]}
-                          removeTask={removeTask}
-                          changeFilter={changeTodolistFilter}
-                          addTask={addTask}
-                          changeTaskStatus={changeTaskStatus}
-                          removeTodoList={removeTodoList}
-                          onChangeInputValue={onChangeInputValue}
-                          onChangeTodoListTitle={onChangeTodoListTitle}
-                />}
-              </Paper>
-            </Grid>
-          )
-        })}
-      </Grid>
+        <Grid container direction="row"
+              alignItems="flex-start">
+          {todoList.map(t => {
+            return (
+              <Grid style={{padding: '20px 0'}} key={t.id}>
+                <Paper style={{padding: '20px', marginRight: '10px'}}>
+                  <Todolist todoListId={t.id}
+                            key={t.id}
+                            title={t.title}
+                            filter={t.filter}
+                            entityStatus={t.entityStatus}
+                            tasks={tasks[t.id]}
+                            removeTask={removeTask}
+                            changeFilter={changeTodolistFilter}
+                            addTask={addTask}
+                            changeTaskStatus={changeTaskStatus}
+                            removeTodoList={removeTodoList}
+                            onChangeInputValue={onChangeInputValue}
+                            onChangeTodoListTitle={onChangeTodoListTitle}
+                  />
+                </Paper>
+              </Grid>
+            )
+          })}
+        </Grid>
       </Container>
     </>
   )
