@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 
@@ -11,6 +11,7 @@ import {RequestStatusType} from "../Bll/Reducers/appReducer";
 import IconButton from '@mui/material/IconButton/IconButton';
 import {Delete} from '@mui/icons-material';
 import Button from '@mui/material/Button/Button';
+import {Variants} from "./Skeleton/Skeleton";
 
 
 type PropsType = {
@@ -30,6 +31,7 @@ type PropsType = {
 
 
 export const Todolist = React.memo((props: PropsType) => {
+  let [value, setValue] = useState(false)
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(fetchTasksTC(props.todoListId))
@@ -63,38 +65,41 @@ export const Todolist = React.memo((props: PropsType) => {
     props.onChangeTodoListTitle(props.todoListId, inputValue)
   }, [props])
 
-  return <div>
-    <h3>
-      <EditableSpan callBack={onChangeInputValue} title={props.title}/>
-      <IconButton onClick={() => onClickRemoveTodoListHandler(props.todoListId)}
-                  disabled={props.entityStatus === "loading"} aria-label="delete" size="large">
-        <Delete/>
-      </IconButton>
-    </h3>
-    <AddItemForm addTask={addTask} disabled={props.entityStatus === 'loading'}/>
-    <div style={{listStyleType: 'none', padding: 0}}>
-      {
-        tasksForTodolist.map(t => {
-          return (
-            <Tasks key={t.id} todoListId={props.todoListId} removeTask={props.removeTask}
-                   changeTaskStatus={props.changeTaskStatus} onChangeInputValue={props.onChangeInputValue} task={t}
-                   entityStatus={props.entityStatus}/>
-          )
-        })
-      }
-    </div>
+  return <>
+
     <div>
-      <Button variant={props.filter === 'all' ? "contained" : "text"}
-              onClick={onAllClickHandler}>All
-      </Button>
-      <Button color={"success"} variant={props.filter === 'active' ? "contained" : "text"}
-              onClick={onActiveClickHandler}>Active
-      </Button>
-      <Button color={"secondary"} variant={props.filter === 'completed' ? "contained" : "text"}
-              onClick={onCompletedClickHandler}>Completed
-      </Button>
+      <h3>
+        <EditableSpan callBack={onChangeInputValue} title={props.title}/>
+        <IconButton onClick={() => onClickRemoveTodoListHandler(props.todoListId)}
+                    disabled={props.entityStatus === "loading"} aria-label="delete" size="large">
+          <Delete/>
+        </IconButton>
+      </h3>
+      <AddItemForm addTask={addTask} disabled={props.entityStatus === 'loading'}/>
+      <div style={{listStyleType: 'none', padding: 0}}>
+        {
+          tasksForTodolist.map(t => {
+            return (
+              <Tasks key={t.id} todoListId={props.todoListId} removeTask={props.removeTask}
+                     changeTaskStatus={props.changeTaskStatus} onChangeInputValue={props.onChangeInputValue} task={t}
+                     entityStatus={props.entityStatus}/>
+            )
+          })
+        }
+      </div>
+      <div>
+        <Button variant={props.filter === 'all' ? "contained" : "text"}
+                onClick={onAllClickHandler}>All
+        </Button>
+        <Button color={"success"} variant={props.filter === 'active' ? "contained" : "text"}
+                onClick={onActiveClickHandler}>Active
+        </Button>
+        <Button color={"secondary"} variant={props.filter === 'completed' ? "contained" : "text"}
+                onClick={onCompletedClickHandler}>Completed
+        </Button>
+      </div>
     </div>
-  </div>
+  </>
 })
 
 

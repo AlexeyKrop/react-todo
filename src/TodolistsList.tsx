@@ -1,5 +1,5 @@
 import {useAppDispatch, useAppSelector} from "./Bll/state/hooks";
-import React, {useCallback, useEffect} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {
   changeTodolistFilterAC, changeTodolistTitleTC,
   createTodolistTC,
@@ -14,12 +14,17 @@ import Paper from "@mui/material/Paper/Paper";
 import {Todolist} from "./Components/Todolist";
 import Container from "@mui/material/Container/Container";
 import {Navigate} from "react-router-dom";
+import {Variants} from "./Components/Skeleton/Skeleton";
+import {selectApp} from "./Bll/Reducers/appReducer";
 
 export const TodolistsList = () => {
   const todoList = useAppSelector(state => state.todoList)
   const tasks = useAppSelector(state => state.tasks)
   const isLogin = useAppSelector(state => state.auth.isLogin)
   const dispatch = useAppDispatch()
+  const {status, initialized} = useAppSelector(selectApp)
+  let [value, setValue] = useState(false)
+  console.log(status)
   useEffect(() => {
     if(!isLogin){
       return
@@ -63,17 +68,19 @@ export const TodolistsList = () => {
   }
   return (
     <>
+
       <Container fixed>
       <Grid container>
         <AddItemForm addTask={addToDoList}/>
       </Grid>
+
       <Grid container direction="row"
             alignItems="flex-start">
         {todoList.map(t => {
           return (
             <Grid style={{padding: '20px 0'}} key={t.id}>
               <Paper style={{padding: '20px', marginRight: '10px'}}>
-                <Todolist todoListId={t.id}
+                { value ? <Variants /> :  <Todolist todoListId={t.id}
                           key={t.id}
                           title={t.title}
                           filter={t.filter}
@@ -86,7 +93,7 @@ export const TodolistsList = () => {
                           removeTodoList={removeTodoList}
                           onChangeInputValue={onChangeInputValue}
                           onChangeTodoListTitle={onChangeTodoListTitle}
-                />
+                />}
               </Paper>
             </Grid>
           )
