@@ -2,7 +2,7 @@ import {AddTodolistAT, RemoveTodolistAT, SetTodolistsAT} from "./todolistReducer
 import {Dispatch} from "redux";
 import {TaskStatuses, TaskType, todolistAPI} from "../../Api/todolist-api";
 import {AppRootStateType} from "../state/store";
-import {setAppStatusAC} from "./appReducer";
+import {resultCodeStatus, setAppStatusAC} from "./appReducer";
 import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
@@ -154,7 +154,7 @@ export const removeTaskTC = (todolistId: string, taskId: string) => {
     dispatch(changeTasksDisabledStatusAC(todolistId, taskId, true))
     todolistAPI.deleteTask(todolistId, taskId)
       .then(res => {
-        if (res.data.resultCode === 0) {
+        if (res.data.resultCode === resultCodeStatus.success) {
           dispatch(removeTaskAC(todolistId, taskId))
           dispatch(setAppStatusAC("succeeded"))
         } else {
@@ -173,7 +173,7 @@ export const addTaskTC = (todolistId: string, title: string) => {
     dispatch(setAppStatusAC("loading"))
     todolistAPI.createTask(todolistId, title)
       .then(res => {
-        if (res.data.resultCode === 0) {
+        if (res.data.resultCode === resultCodeStatus.success) {
           dispatch(addTaskAC(res.data.data.item))
           dispatch(setAppStatusAC("succeeded"))
         } else {

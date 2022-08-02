@@ -1,6 +1,6 @@
 import {FilterValuesType, todolistAPI, TodolistType} from "../../Api/todolist-api";
 import {Dispatch} from "redux";
-import {RequestStatusType, setAppErrorAC, setAppStatusAC} from "./appReducer";
+import {RequestStatusType, resultCodeStatus, setAppErrorAC, setAppStatusAC} from "./appReducer";
 import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
@@ -78,7 +78,7 @@ export const createTodolistTC = (title: string) => {
     dispatch(setAppStatusAC("loading"))
     todolistAPI.createTodolist(title)
       .then(res => {
-        if (res.data.resultCode === 0) {
+        if (res.data.resultCode === resultCodeStatus.success) {
           dispatch(addTodolistAC(res.data.data.item))
           dispatch(setAppStatusAC("succeeded"))
         } else {
@@ -97,7 +97,7 @@ export const removeTodolistTC = (todolistId: string) => {
     dispatch(changeTodolistEntityStatusAC(todolistId, "loading"))
     todolistAPI.deleteTodolist(todolistId)
       .then((res) => {
-        if (res.data.resultCode === 0) {
+        if (res.data.resultCode === resultCodeStatus.success) {
           dispatch(removeTodolistAC(todolistId))
           dispatch(setAppStatusAC("succeeded"))
         } else {

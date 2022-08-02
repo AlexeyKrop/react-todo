@@ -7,7 +7,11 @@ import {AppRootStateType} from "../state/store";
 
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
-
+export enum resultCodeStatus {
+  success = 0,
+  error = 1,
+  captcha = 10
+}
 const initialState = {
   status: 'loading' as RequestStatusType,
   error: null as null | string,
@@ -43,7 +47,7 @@ export const setAppInitialAC = (value: boolean) => ({type: 'APP/SET-APP-INITIAL'
 export const appInitialTC = () => (dispatch: Dispatch) => {
   authAPI.me()
     .then(res => {
-      if (res.data.resultCode === 0) {
+      if (res.data.resultCode === resultCodeStatus.success) {
         dispatch(setIsLoggedInAC(true))
       } else {
         handleServerAppError(dispatch, res.data)
