@@ -52,6 +52,7 @@ export const setAppInitialAC = (value: boolean) => ({type: 'APP/SET-APP-INITIAL'
 export const setAppLoadAC = (value: boolean) => ({type: 'APP/SET-APP-LOAD', value} as const)
 //THUNKS
 export const appInitialTC = () => (dispatch: Dispatch) => {
+  dispatch(setAppLoadAC(true))
   authAPI.me()
     .then(res => {
       if (res.data.resultCode === resultCodeStatus.success) {
@@ -64,6 +65,7 @@ export const appInitialTC = () => (dispatch: Dispatch) => {
     .catch((error: AxiosError) => {
       handleServerNetworkError(dispatch, error.message, 'failed')
     })
+    .finally(() => dispatch(setAppLoadAC(false)))
 }
 
 //TYPES

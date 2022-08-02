@@ -31,7 +31,6 @@ if(!initialized){
 }
   return (
     <div className="App">
-
       <AppBar position="static">
         <Toolbar>
           <Button onClick={onClickLogOut} startIcon={<LogoutIcon />}  variant="text" color="inherit" >Log out</Button>
