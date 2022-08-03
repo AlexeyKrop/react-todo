@@ -7,6 +7,7 @@ import Container from '@mui/material/Container/Container';
 
 
 export const Skeletons = () => {
+
   // the count of elements? which we want show to display before initialized
   const data = [1,2,3]
   return (
