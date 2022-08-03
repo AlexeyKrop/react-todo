@@ -14,7 +14,7 @@ export const Skeletons = () => {
       <Grid container direction="row"
             alignItems="flex-start">
         {data.map((el, index) => {
-          return  <Grid style={{padding: '20px 0'}}>
+          return  <Grid key={index} style={{padding: '20px 0'}}>
             <Paper style={{padding: '20px', marginRight: '10px'}}>
               <Stack spacing={1}>
                 <Skeleton variant="text" />
