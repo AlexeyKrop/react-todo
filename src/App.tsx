@@ -13,6 +13,7 @@ import {logoutTC} from "./Bll/Reducers/authReducer";
 import {appInitialTC, selectApp} from "./Bll/Reducers/appReducer";
 import LogoutIcon from '@mui/icons-material/Logout';
 import {SimpleBackdrop} from "./Components/Backdrop/Backdrop";
+import {Skeletons} from "./Components/Skeleton/Skeleton";
 
 const App = () => {
   // const status = useAppSelector(state => state.app.status)
@@ -26,23 +27,24 @@ const App = () => {
   const onClickLogOut = () => {
     dispatch(logoutTC())
   }
-if(!initialized){
-  return <SimpleBackdrop/>
-}
+  if (!initialized) {
+    return <SimpleBackdrop/>
+  }
   return (
     <div className="App">
       <AppBar position="static">
         <Toolbar>
-          <Button onClick={onClickLogOut} startIcon={<LogoutIcon />}  variant="text" color="inherit" >Log out</Button>
+          <Button onClick={onClickLogOut} startIcon={<LogoutIcon/>} variant="text" color="inherit">Log out</Button>
         </Toolbar>
       </AppBar>
-      <SimpleBackdrop />
+      <SimpleBackdrop/>
       {status === 'loading' && <LinearProgress sx={{position: 'absolute', width: '100%'}}/>}
       <Routes>
         <Route path="/react-todo" element={<TodolistsList/>}/>
         <Route path="/" element={<TodolistsList/>}/>
         <Route path="/login" element={<Login/>}/>
       </Routes>
+      {status === 'loading' && <Skeletons/>}
       <ErrorSnackbar/>
     </div>
   );
