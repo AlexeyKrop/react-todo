@@ -11,7 +11,7 @@ import {RequestStatusType} from "../Bll/Reducers/appReducer";
 import IconButton from '@mui/material/IconButton/IconButton';
 import {Delete} from '@mui/icons-material';
 import Button from '@mui/material/Button/Button';
-import {Variants} from "./Skeleton/Skeleton";
+
 
 
 type PropsType = {
@@ -31,7 +31,6 @@ type PropsType = {
 
 
 export const Todolist = React.memo((props: PropsType) => {
-  let [value, setValue] = useState(false)
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(fetchTasksTC(props.todoListId))
