@@ -1,5 +1,5 @@
 import React from 'react';
-import {FormikErrors, FormikProvider, useFormik} from 'formik';
+import {FormikErrors, useFormik} from 'formik';
 import TextField from '@mui/material/TextField/TextField';
 import FormGroup from '@mui/material/FormGroup/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel/FormControlLabel';
@@ -15,9 +15,9 @@ const Login = () => {
   const isLogin = useAppSelector(state => state.auth.isLogin)
   const dispatch = useAppDispatch()
   type FormValues = {
-    email: string,
-    password: string,
-    rememberMe: boolean
+    email?: string,
+    password?: string,
+    rememberMe?: boolean
   }
   const formik = useFormik({
     initialValues: {
@@ -25,7 +25,7 @@ const Login = () => {
       password: '',
       rememberMe: false
     },
-    validate:  values => {
+    validate: values => {
       let errors: FormikErrors<FormValues> = {};
       if (!values.email) {
         errors.email = 'Required';
@@ -34,9 +34,10 @@ const Login = () => {
       }
       if (!values.password) {
         errors.password = 'Required';
-      } else if (values.password.length > 3) {
-        errors.password = 'Must be 20 characters or less';
+      } else if (values.password.length < 4) {
+        errors.password = 'Password should be of minimum 4 characters length'
       }
+
       return errors;
     },
     onSubmit: values => {
@@ -49,30 +50,30 @@ const Login = () => {
   }
   return (
     <>
-      <Box sx={{flexGrow: 1}} >
-        <Grid container justifyContent="center" alignItems="center" marginTop='100px'  >
-          <Grid  sx={{
+      <Box sx={{flexGrow: 1}}>
+        <Grid container justifyContent="center" alignItems="center" marginTop='100px'>
+          <Grid sx={{
             width: 300,
             height: 300,
           }}>
             <form onSubmit={formik.handleSubmit}>
               <FormGroup>
-                <FormikProvider value={formik}>
-                  <TextField
-                    {...formik.getFieldProps('email')}
-                    id="email"
-                    name="email"
-                    type="email" label="email" variant="standard"/>
-                  {formik.errors.email ? <div>{formik.errors.email}</div> : null}
-                  <TextField
-                    {...formik.getFieldProps('password')}
-                    id="password"
-                    name="password"
-                    type="password" label="password" variant="standard"/>
-                  <FormControlLabel control={<Checkbox {...formik.getFieldProps('rememberMe')} name="rememberMe"/>}
-                                    label="remember me"/>
-                  <Button type="submit" variant="contained">Submit</Button>
-                </FormikProvider>
+                <TextField
+                  id="email"
+                  type="email" label="email" variant="standard"
+                  helperText={formik.touched.email && formik.errors.email}
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  {...formik.getFieldProps('email')}/>
+                <TextField
+                  id="password"
+                  type="password" label="password" variant="standard"
+                  error={formik.touched.password && Boolean(formik.errors.password)}
+                  helperText={formik.touched.password && formik.errors.password}
+                  {...formik.getFieldProps('password')}/>
+                <FormControlLabel control={<Checkbox {...formik.getFieldProps('rememberMe')} name="rememberMe"/>}
+                                  label="remember me"/>
+                <Button type="submit" variant="contained">Submit</Button>
+
               </FormGroup>
             </form>
           </Grid>
