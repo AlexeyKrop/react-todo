@@ -13,7 +13,6 @@ import {logoutTC} from "./Bll/Reducers/authReducer";
 import {appInitialTC, selectApp} from "./Bll/Reducers/appReducer";
 import LogoutIcon from '@mui/icons-material/Logout';
 import {SimpleBackdrop} from "./Components/Backdrop/Backdrop";
-import {Skeletons} from "./Components/Skeleton/Skeleton";
 import {Page} from "./Components/PageNotFound/PageNotFound";
 
 const App = () => {
