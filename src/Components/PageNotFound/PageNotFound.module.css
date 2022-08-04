@@ -108,7 +108,10 @@ a {
     padding: 0;
     cursor: pointer;
 }
-
+.wrapperPage span {
+    font-size: 24px;
+    color: #FFFFFF;
+}
 :focus {
     outline: 0;
 }
@@ -295,9 +298,7 @@ a {
 .e-socialLink:hover {
     opacity: .7;
 }
-/* 2.2. END Social style */
 
-/* 2.3. Lamp */
 .lamp {
     position: absolute;
     left: 0;
