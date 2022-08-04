@@ -1,5 +1,5 @@
 import React from 'react';
-import {FormikProvider, useFormik} from 'formik';
+import {FormikErrors, FormikProvider, useFormik} from 'formik';
 import TextField from '@mui/material/TextField/TextField';
 import FormGroup from '@mui/material/FormGroup/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel/FormControlLabel';
@@ -14,11 +14,30 @@ import {Navigate} from 'react-router-dom';
 const Login = () => {
   const isLogin = useAppSelector(state => state.auth.isLogin)
   const dispatch = useAppDispatch()
+  type FormValues = {
+    email: string,
+    password: string,
+    rememberMe: boolean
+  }
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
       rememberMe: false
+    },
+    validate:  values => {
+      let errors: FormikErrors<FormValues> = {};
+      if (!values.email) {
+        errors.email = 'Required';
+      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Invalid email address';
+      }
+      if (!values.password) {
+        errors.password = 'Required';
+      } else if (values.password.length > 3) {
+        errors.password = 'Must be 20 characters or less';
+      }
+      return errors;
     },
     onSubmit: values => {
       dispatch(loginTC(values));
@@ -44,6 +63,7 @@ const Login = () => {
                     id="email"
                     name="email"
                     type="email" label="email" variant="standard"/>
+                  {formik.errors.email ? <div>{formik.errors.email}</div> : null}
                   <TextField
                     {...formik.getFieldProps('password')}
                     id="password"
