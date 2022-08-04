@@ -46,9 +46,8 @@ const App = () => {
         <Route path="/login" element={<Login/>}/>
         <Route path="404" element={<Page/>}/>
         <Route path="*" element={<Navigate to={'404'}/>}/>
-
       </Routes>
-      {status === 'loading' && <Skeletons/>}
+      {/*{status === 'loading' && <Skeletons/>}*/}
       <ErrorSnackbar/>
     </div>
   );
