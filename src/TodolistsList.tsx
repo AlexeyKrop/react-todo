@@ -14,19 +14,22 @@ import {AddItemForm} from "./Components/AddItemForm";
 import Paper from "@mui/material/Paper/Paper";
 import {Todolist} from "./Components/Todolist";
 import Container from "@mui/material/Container/Container";
-import {Navigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 
 export const TodolistsList = () => {
   const todoList = useAppSelector(state => state.todoList)
   const tasks = useAppSelector(state => state.tasks)
   const isLogin = useAppSelector(state => state.auth.isLogin)
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+
   useEffect(() => {
     if (!isLogin) {
       return
     }
     dispatch(fetchTodolistsTC())
   }, [dispatch])
+
 
   const addToDoList = useCallback((title: string) => {
     dispatch(createTodolistTC(title))
@@ -62,36 +65,39 @@ export const TodolistsList = () => {
   if (!isLogin) {
     return <Navigate to="/login"/>
   }
+  // if (!isLogin) {
+  //   navigate("/login")
+  // }
   return (
-      <Container fixed>
-        <Grid container>
-          <AddItemForm addTask={addToDoList}/>
-        </Grid>
-        <Grid container direction="row"
-              alignItems="flex-start">
-          {todoList.map(t => {
-            return (
-              <Grid style={{padding: '20px 0'}} key={t.id}>
-                <Paper style={{padding: '20px', marginRight: '10px'}}>
-                  <Todolist todoListId={t.id}
-                            key={t.id}
-                            title={t.title}
-                            filter={t.filter}
-                            entityStatus={t.entityStatus}
-                            tasks={tasks[t.id]}
-                            removeTask={removeTask}
-                            changeFilter={changeTodolistFilter}
-                            addTask={addTask}
-                            changeTaskStatus={changeTaskStatus}
-                            removeTodoList={removeTodoList}
-                            onChangeInputValue={onChangeInputValue}
-                            onChangeTodoListTitle={onChangeTodoListTitle}
-                  />
-                </Paper>
-              </Grid>
-            )
-          })}
-        </Grid>
-      </Container>
+    <Container fixed>
+      <Grid container>
+        <AddItemForm addTask={addToDoList}/>
+      </Grid>
+      <Grid container direction="row"
+            alignItems="flex-start">
+        {todoList.map(t => {
+          return (
+            <Grid style={{padding: '20px 0'}} key={t.id}>
+              <Paper style={{padding: '20px', marginRight: '10px'}}>
+                <Todolist todoListId={t.id}
+                          key={t.id}
+                          title={t.title}
+                          filter={t.filter}
+                          entityStatus={t.entityStatus}
+                          tasks={tasks[t.id]}
+                          removeTask={removeTask}
+                          changeFilter={changeTodolistFilter}
+                          addTask={addTask}
+                          changeTaskStatus={changeTaskStatus}
+                          removeTodoList={removeTodoList}
+                          onChangeInputValue={onChangeInputValue}
+                          onChangeTodoListTitle={onChangeTodoListTitle}
+                />
+              </Paper>
+            </Grid>
+          )
+        })}
+      </Grid>
+    </Container>
   )
 }
