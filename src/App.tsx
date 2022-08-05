@@ -40,8 +40,8 @@ const App = () => {
       <SimpleBackdrop/>
       {status === 'loading' && <LinearProgress sx={{position: 'absolute', width: '100%'}}/>}
       <Routes>
+        <Route path={'/'} element={<Navigate to={'/react-todo'}/>}/>
         <Route path="/react-todo" element={<TodolistsList/>}/>
-        <Route path="/" element={<TodolistsList/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="404" element={<Page/>}/>
         <Route path="*" element={<Navigate to={'404'}/>}/>
