@@ -6,10 +6,11 @@ import FormControlLabel from '@mui/material/FormControlLabel/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox/Checkbox';
 import Button from '@mui/material/Button/Button';
 import Grid from '@mui/material/Grid/Grid';
-import {Box} from "@mui/material";
 import {loginTC} from "../../Bll/Reducers/authReducer";
 import {useAppDispatch, useAppSelector} from "../../Bll/state/hooks";
 import {Navigate} from 'react-router-dom';
+import FormLabel from '@mui/material/FormLabel/FormLabel';
+import Box from '@mui/material/Box/Box';
 
 const Login = () => {
   const isLogin = useAppSelector(state => state.auth.isLogin)
@@ -57,6 +58,16 @@ const Login = () => {
             height: 300,
           }}>
             <form onSubmit={formik.handleSubmit}>
+              <FormLabel>
+                <p>To log in get registered
+                  <a href={'https://social-network.samuraijs.com/'}
+                     target={'_blank'}> here
+                  </a>
+                </p>
+                <p>or use common test account credentials:</p>
+                <p>Email: free@samuraijs.com</p>
+                <p>Password: free</p>
+              </FormLabel>
               <FormGroup>
                 <TextField
                   id="email"
