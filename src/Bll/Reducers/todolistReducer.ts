@@ -1,6 +1,6 @@
 import {FilterValuesType, todolistAPI, TodolistType} from "../../Api/todolist-api";
 import {Dispatch} from "redux";
-import {RequestStatusType, resultCodeStatus, setAppErrorAC, setAppStatusAC} from "./appReducer";
+import {RequestStatusType, resultCodeStatus, setAppStatusAC} from "./appReducer";
 import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
@@ -110,7 +110,6 @@ export const removeTodolistTC = (todolistId: string) => {
   }
 }
 export const changeTodolistTitleTC = (todolistId: string, title: string) => {
-  console.log(todolistId)
   return (dispatch: Dispatch) => {
     dispatch(setAppStatusAC("loading"))
     todolistAPI.updateTodolist(todolistId, title)
